@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import GothicBold from "assets/font/NanumGothicBold.ttf";
-
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -29,9 +27,9 @@ export const PageLink = styled(Link)<PageLinkProps>`
   display: inline-block;
   transition: 0.1s;
   font-size: 0.6em;
-  font-family: ${({ isactive }) => isactive === "true" && GothicBold};
+  font-family: ${({ isactive }) => isactive === "true" && "나눔고딕 Bold"};
 
   &:hover {
-    font-family: ${GothicBold};
+    font-family: "나눔고딕 Bold";
   }
 `;

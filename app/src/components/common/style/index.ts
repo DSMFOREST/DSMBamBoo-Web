@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import GothicBold from "assets/font/NanumGothicBold.ttf";
-import GothicLight from "assets/font/NanumGothicLight.ttf";
 
 export const Logo = styled.p`
   font-size: 1.8em;
@@ -73,7 +71,7 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
     > thead > tr > td {
       text-align: center;
       color: #444444;
-      font-family: ${GothicBold};
+      font-family: "나눔고딕 Bold";
       font-size: 0.9em;
       border-bottom: 1px solid #707070;
       padding: 1.5rem 0 1rem;
@@ -106,7 +104,7 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
 
       > td {
         text-align: center;
-        font-family: ${GothicLight};
+        font-family: "나눔고딕 Light";
         font-size: 0.8em;
         color: #444444;
         padding: 0.825rem 0;
