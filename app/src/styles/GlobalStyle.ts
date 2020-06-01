@@ -3,8 +3,6 @@ import {
   GlobalStyleComponent,
   DefaultTheme,
 } from "styled-components";
-import HS from "assets/font/HS.ttf";
-import Gothic from "assets/font/NanumGothic.ttf";
 
 const GlobalStyle: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
   ::-moz-selection {
@@ -19,11 +17,11 @@ const GlobalStyle: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
   html, body {
     width: 100%;
     min-width: 600px;
-    font-family: ${Gothic}, sans-serif;
+    font-family: '나눔고딕', sans-serif;
   }
 
   .HS {
-    font-family: ${HS}, sans-serif;
+    font-family: 'HS봄바람체 2.0', sans-serif;
   }
 
   input, textarea {

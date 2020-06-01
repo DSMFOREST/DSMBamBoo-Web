@@ -1,3 +1,4 @@
 import BackgroundImg from "./backgroundImg.png";
+import LoadingImg from "./loading.gif";
 
-export { BackgroundImg };
+export { BackgroundImg, LoadingImg };
