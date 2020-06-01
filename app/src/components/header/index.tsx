@@ -1,16 +1,19 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC } from "react";
 
+import { useModalRedux } from "container/modal";
 import Logo from "components/common/Logo";
 import * as S from "./style";
 
 const Header: FC = () => {
-  const didMountRef = useRef(false);
+  const {
+    modalReducer: { handleLoginModal },
+  } = useModalRedux();
 
   return (
     <S.Wrapper>
       <div>
         <Logo />
-        <S.LoginButton>관리자 로그인</S.LoginButton>
+        <S.LoginButton onClick={handleLoginModal}>관리자 로그인</S.LoginButton>
       </div>
     </S.Wrapper>
   );

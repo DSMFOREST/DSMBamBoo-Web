@@ -6,8 +6,8 @@ import { store } from "data/store";
 import App from "./page";
 
 render(
-  // <Provider store={store}>
-  <App />,
-  // </Provider>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );

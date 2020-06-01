@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 
-const appReducer = combineReducers({});
+import modal from "./modal";
+
+const appReducer = combineReducers({ modal });
 
 const rootReducer = (state, action) => {
   let resetState = state;
