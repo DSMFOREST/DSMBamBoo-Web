@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-import { COLORS } from "src/styles/GlobalStyle";
-import { downToUp, suddenMotion } from "src/styles/animtaion";
+import { THEMA } from "styles/GlobalStyle";
 
 export const Wrapper = styled.div`
   width: 300px;
   height: 320px;
-  background: #697c4e;
+  background: ${THEMA.main1};
   border-radius: 10px;
 
   > section {
@@ -31,6 +30,24 @@ export const Wrapper = styled.div`
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   }
+
+  > div.loading {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    background: #fff;
+    border-top: 1px solid ${THEMA.main1};
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    > img {
+      width: 24px;
+      height: 24px;
+    }
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -51,7 +68,7 @@ export const Title = styled.p<{ isBig?: boolean }>`
   margin: ${({ isBig }) => (isBig ? "0 0 4px" : "8px 0 40px")};
 `;
 
-export const InputLabel = styled.label<{ isFailed?: boolean }>`
+export const InputLabel = styled.label<{ isShow?: boolean }>`
   width: 100%;
   border-bottom: 1px solid #e1e1e1;
   margin: 0 0 10px;
@@ -67,7 +84,7 @@ export const InputLabel = styled.label<{ isFailed?: boolean }>`
     width: 15%;
     text-align: center;
     font-family: "나눔고딕 Bold";
-    color: #697c4e;
+    color: ${THEMA.main1};
     font-size: 0.7em;
   }
 
@@ -79,15 +96,13 @@ export const InputLabel = styled.label<{ isFailed?: boolean }>`
     border: none;
   }
 
-  ${({ isFailed }) =>
-    isFailed &&
-    `
-  &::after {
-    content: "ID 또는 PW가 틀렸습니다.";
+  > span.warning {
     color: #ff7070;
+    width: auto;
+    display: ${({ isShow }) => (isShow ? "block" : "none")};
     position: absolute;
     right: 0;
     bottom: -22px;
     font-size: 0.425em;
-  }`};
+  }
 `;

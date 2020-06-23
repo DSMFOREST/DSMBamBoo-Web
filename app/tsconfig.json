@@ -1,28 +1,20 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": false,
+    "target": "es5",
+    "baseUrl": "./src",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "module": "commonjs",
-    "target": "es2015",
-    "jsx": "react",
-    "baseUrl": "./",
-    "types": ["node"],
-    "typeRoots": ["node_modules/@types", "src/@types"],
-    "paths": {
-      "src/*": ["src/*"],
-      "page/*": ["src/page/*"],
-      "components/*": ["src/components/*"],
-      "container/*": ["src/container/*"],
-      "assets/*": ["src/assets/*"],
-      "data/*": ["src/data/*"],
-      "actions/*": ["src/data/actions/*"],
-      "reducers/*": ["src/data/reducers/*"],
-      "middleware/*": ["src/data/middleware/*"],
-      "utils/*": ["src/utils/*"]
-    }
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
   },
-  "include": ["./src/**/*.tsx", "./src/@types/**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

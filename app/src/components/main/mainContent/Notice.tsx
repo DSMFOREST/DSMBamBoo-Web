@@ -1,6 +1,5 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC } from "react";
 
-import * as S from "./style";
 import Table from "components/common/Table";
 import Search from "components/common/Search";
 import Pagination from "components/common/pagination";

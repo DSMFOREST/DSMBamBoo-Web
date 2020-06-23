@@ -1,65 +1,44 @@
 import { fork, takeLatest, all } from "redux-saga/effects";
 
 import {
-  LOGIN,
-  LOGIN_ASYNC,
-  loginType,
-  loginPayload,
-  Login,
-  ADD_ADMIN,
-  ADD_ADMIN_ASYNC,
-  addAdminType,
-  addAdminPayload,
-  AddAdmin,
-  GET_ADMIN_LIST,
-  GET_ADMIN_LIST_ASYNC,
-  getAdminListType,
-  getAdminListPayload,
-  GetAdminList,
-} from "actions/auth";
-import { loginApi, addAdminApi, getAdminListApi } from "middleware/api";
-import { sagaEntity } from "middleware/sagas";
+  ADMIN_LOGIN,
+  ADMIN_LOGIN_ASYNC,
+  USER_LOGIN,
+  USER_LOGIN_ASYNC,
+  adminLoginType,
+  adminLoginPayload,
+  userLoginType,
+  userLoginPayload,
+  AdminLogin,
+  UserLogin,
+} from "data/actions/auth";
+import { adminLoginApi, userLoginApi } from "data/middleware/api";
+import { sagaEntity } from "data/middleware/sagas";
 
-function* login(action: Login) {
-  yield sagaEntity<loginType, loginPayload>({
+function* adminLogin(action: AdminLogin) {
+  yield sagaEntity<adminLoginType, adminLoginPayload>({
     action,
-    api: loginApi,
-    type: LOGIN_ASYNC,
+    api: adminLoginApi,
+    type: ADMIN_LOGIN_ASYNC,
   });
 }
 
-function* addAdmin(action: AddAdmin) {
-  yield sagaEntity<addAdminType, addAdminPayload>({
+function* userLogin(action: UserLogin) {
+  yield sagaEntity<userLoginType, userLoginPayload>({
     action,
-    api: addAdminApi,
-    type: ADD_ADMIN_ASYNC,
+    api: userLoginApi,
+    type: USER_LOGIN_ASYNC,
   });
 }
 
-function* getAdminList(action: GetAdminList) {
-  yield sagaEntity<getAdminListType, getAdminListPayload>({
-    action,
-    api: getAdminListApi,
-    type: GET_ADMIN_LIST_ASYNC,
-  });
+function* watchAdminLogin() {
+  yield takeLatest(ADMIN_LOGIN, adminLogin);
 }
 
-function* whatchLogin() {
-  yield takeLatest(LOGIN, login);
-}
-
-function* whatchAddAdmin() {
-  yield takeLatest(ADD_ADMIN, addAdmin);
-}
-
-function* whatchGetAdminList() {
-  yield takeLatest(GET_ADMIN_LIST, getAdminList);
+function* watchUserLogin() {
+  yield takeLatest(USER_LOGIN, userLogin);
 }
 
 export default function* authSaga() {
-  yield all([
-    fork(whatchLogin),
-    fork(whatchAddAdmin),
-    fork(whatchGetAdminList),
-  ]);
+  yield all([fork(watchAdminLogin), fork(watchUserLogin)]);
 }

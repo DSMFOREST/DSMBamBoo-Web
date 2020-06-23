@@ -1,4 +1,4 @@
-export const handleKeyPress = (key, event) => {
+export const handleKeyPress = (key: string, event: any) => {
   if (key === "Enter") {
     event();
   }

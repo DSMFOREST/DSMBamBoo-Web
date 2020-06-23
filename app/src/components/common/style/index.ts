@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
+import { THEMA } from "styles/GlobalStyle";
+
 export const Logo = styled.p`
   font-size: 1.8em;
   line-height: 1.15;
-  color: #607151;
+  color: ${THEMA.main2};
 `;
 
 export const SearchWrapper = styled.div`
@@ -33,7 +35,7 @@ export const Category = styled.div`
     display: flex;
     align-items: center;
     padding: 2px;
-    color: #707070;
+    color: ${THEMA.fontColor1};
     font-size: 1em;
 
     > i {
@@ -42,7 +44,7 @@ export const Category = styled.div`
       margin-left: 8px;
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      border-top: 4px solid #707070;
+      border-top: 4px solid ${THEMA.fontColor1};
     }
   }
 `;
@@ -54,7 +56,7 @@ export const InputBox = styled.div`
 
   > input {
     width: 88%;
-    color: #707070;
+    color: ${THEMA.fontColor1};
     font-size: 1em;
     border: none;
   }
@@ -70,7 +72,7 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
 
     > thead > tr > td {
       text-align: center;
-      color: #444444;
+      color: ${THEMA.fontColor2};
       font-family: "나눔고딕 Bold";
       font-size: 0.9em;
       border-bottom: 1px solid #707070;
@@ -98,7 +100,7 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
       transition: 0.2s;
 
       &:hover {
-        background: #f7f7f7;
+        background: ${THEMA.fontColor3};
         cursor: pointer;
       }
 
@@ -106,7 +108,7 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
         text-align: center;
         font-family: "나눔고딕 Light";
         font-size: 0.8em;
-        color: #444444;
+        color: ${THEMA.fontColor2};
         padding: 0.825rem 0;
 
         &.index {

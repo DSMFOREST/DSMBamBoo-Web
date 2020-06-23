@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, useCallback } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 
 import * as S from "./style";
@@ -18,7 +18,7 @@ const Main: FC = () => {
 
       push("/?page=1");
     }
-  }, [didMountRef]);
+  }, [didMountRef, push]);
 
   return (
     <div>

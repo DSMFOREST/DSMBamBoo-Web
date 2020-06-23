@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-import { COLORS } from "src/styles/GlobalStyle";
-import { downToUp, suddenMotion } from "src/styles/animtaion";
-
 export const Wrapper = styled.div`
   width: 100%;
   height: 100vh;

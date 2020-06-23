@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useModalRedux } from "container/modal";
@@ -10,9 +10,12 @@ const Actions: FC = () => {
     modalReducer: { handleReportModal },
   } = useModalRedux();
 
-  const pushLocation = useCallback((location: string) => {
-    push(`/${location}?page=1`);
-  }, []);
+  const pushLocation = useCallback(
+    (location: string) => {
+      push(`/${location}?page=1`);
+    },
+    [push]
+  );
 
   return (
     <div>

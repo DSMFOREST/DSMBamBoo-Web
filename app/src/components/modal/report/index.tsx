@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, useCallback } from "react";
+import React, { FC } from "react";
 
 import { useModalRedux } from "container/modal";
 import ModalWrapper from "../ModalWrapper";

@@ -14,7 +14,7 @@ const initialState: InitialState = {
   isOpenReportModal: false,
 };
 
-const authReducer = (
+const modalReducer = (
   state = initialState,
   action: ModalActions
 ): InitialState => {
@@ -34,4 +34,4 @@ const authReducer = (
   }
 };
 
-export default authReducer;
+export default modalReducer;

@@ -4,6 +4,18 @@ import {
   DefaultTheme,
 } from "styled-components";
 
+export enum THEMA {
+  main1 = "#697c4e",
+  main2 = "#607151",
+  main3 = "#7bbb5a",
+  fontColor1 = "#707070",
+  fontColor2 = "#444444",
+  fontColor3 = "#f7f7f7",
+  fontColor4 = "#f9f9f9",
+  arraw = "#abb4a3",
+  defaultShadow = "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+}
+
 const GlobalStyle: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
   ::-moz-selection {
     background: #c5c5c5;
@@ -105,14 +117,5 @@ const GlobalStyle: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
     border: none;
   }
 `;
-
-export const COLORS = {
-  main1: "#575757" as const,
-  main2: "#d0d0d0" as const,
-  main3: "#a0a0a0" as const,
-  serve1: "#e6366d" as const,
-  serve2: "#e62662" as const,
-  serve3: "#e67196" as const,
-};
 
 export default GlobalStyle;

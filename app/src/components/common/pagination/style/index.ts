@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+import { THEMA } from "styles/GlobalStyle";
+
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -22,7 +24,8 @@ interface PageLinkProps {
 export const PageLink = styled(Link)<PageLinkProps>`
   text-align: center;
   margin: 0 12px;
-  color: ${({ isicon }) => (isicon === "true" ? "#7bbb5a" : "#444444")};
+  color: ${({ isicon }) =>
+    isicon === "true" ? THEMA.main3 : THEMA.fontColor2};
   padding: 2px;
   display: inline-block;
   transition: 0.1s;

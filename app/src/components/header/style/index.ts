@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { COLORS } from "src/styles/GlobalStyle";
+
+import { THEMA } from "styles/GlobalStyle";
 
 export const Wrapper = styled.header`
   width: 100%;
@@ -18,5 +19,5 @@ export const Wrapper = styled.header`
 
 export const LoginButton = styled.button`
   font-size: 1em;
-  color: #444444;
+  color: ${THEMA.fontColor2};
 `;

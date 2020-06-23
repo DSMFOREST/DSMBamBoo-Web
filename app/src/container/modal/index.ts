@@ -1,7 +1,10 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { handleLoginModalAction, handleReportModalAction } from "actions/modal";
+import {
+  handleLoginModalAction,
+  handleReportModalAction,
+} from "data/actions/modal";
 import { AppState } from "data/store";
 import { InitialState } from "data/reducers/modal";
 

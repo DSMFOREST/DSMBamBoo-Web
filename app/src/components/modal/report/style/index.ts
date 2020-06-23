@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
+import { THEMA } from "styles/GlobalStyle";
+
 export const Wrapper = styled.div`
   width: 600px;
   height: 420px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 3px 10px 0 rgba(105, 124, 78, 0.61);
-  border: solid 2px #697c4e;
+  border: solid 2px ${THEMA.main1};
 
   > header {
     width: 100%;
@@ -14,14 +16,13 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-    border-bottom: solid 1px #e2e2e2;
+    box-shadow: ${THEMA.defaultShadow};
 
     > p {
       font-size: 0.925em;
       font-family: "나눔고딕 Bold";
       margin-left: 40px;
-      color: #707070;
+      color: ${THEMA.fontColor1};
     }
   }
 `;

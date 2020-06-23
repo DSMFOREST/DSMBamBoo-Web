@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { COLORS } from "src/styles/GlobalStyle";
-import { downToUp, suddenMotion } from "src/styles/animtaion";
+import { THEMA } from "styles/GlobalStyle";
 
 export const TitleWrapper = styled.div`
   width: 100%;
@@ -15,12 +14,12 @@ export const TitleWrapper = styled.div`
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     font-size: 2em;
     font-weight: bold;
-    color: #444444;
+    color: ${THEMA.fontColor2};
   }
 
   > p.content {
     font-size: 1em;
-    color: #707070;
+    color: ${THEMA.main1};
     line-height: 1.16;
   }
 `;
@@ -29,13 +28,13 @@ export const Ellipse = styled.i`
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  background-color: #607151;
+  background-color: ${THEMA.main2};
   transform: scaleY(0.3333);
   margin: 4vh 0 5vh;
 `;
 
 export const Arrow = styled.i`
-  border: solid #abb4a3;
+  border: solid ${THEMA.arraw};
   border-width: 0 5px 5px 0;
   padding: 5px;
   transform: rotate(45deg);

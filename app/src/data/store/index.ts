@@ -3,7 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import reduxSaga from "redux-saga";
 
 import reducer from "../reducers";
-import sagas from "middleware/sagas";
+import sagas from "data/middleware/sagas";
 
 const sagaMiddleWare = reduxSaga();
 

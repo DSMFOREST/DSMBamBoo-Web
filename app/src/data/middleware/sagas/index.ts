@@ -1,6 +1,7 @@
 import { put, call, all } from "redux-saga/effects";
-
 import { AxiosError } from "axios";
+
+import authSaga from "./authSaga";
 
 interface SagaEntityParams<ActionT, PayloadT> {
   action: {
@@ -23,13 +24,13 @@ export function* sagaEntity<ActionT, PayloadT = object>({
   } catch (_err) {
     const error: AxiosError = _err;
 
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       alert("다시 로그인 후 이용해 주세요.");
       yield put({ type: "LOG_OUT" });
       window.location.href = "/";
     } else {
       yield put({
-        payload: { data: null, status: error.response.status },
+        payload: { data: null, status: error.response?.status },
         type,
       });
     }
@@ -37,5 +38,5 @@ export function* sagaEntity<ActionT, PayloadT = object>({
 }
 
 export default function* rootSaga() {
-  yield all([]);
+  yield all([call(authSaga)]);
 }

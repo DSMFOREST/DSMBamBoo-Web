@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 
 import * as S from "./style";
 
