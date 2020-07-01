@@ -4,6 +4,8 @@ import { baseURL } from "./currentURL";
 import {
   TokenWithType,
   AccessToken,
+  DeviceToken,
+  RefreshToken,
   AdminLoginRequestType,
   UserLoginRequestType,
   PagenationRequestType,
@@ -14,6 +16,8 @@ export enum API_STATUS {
   userLoginStatus = "userLoginStatus",
   getCategoryStatus = "getCategoryStatus",
   getNoticeStatus = "getNoticeStatus",
+  refreshDeviceTokenStatus = "refreshDeviceTokenStatus",
+  refreshAuthorizationTokenStatus = "refreshAuthorizationTokenStatus",
 }
 
 const authorizationHeader = (accessToken: string) => ({
@@ -24,6 +28,33 @@ const instanceAxios = axios.create({
   baseURL,
   headers: { "Content-Type": "application/json" },
 });
+
+export const refreshDeviceTokenApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<DeviceToken>) => {
+  const response = await instanceAxios.patch(
+    "/users/me/device-token",
+    requset,
+    {
+      headers: authorizationHeader(accessToken),
+    }
+  );
+
+  return [response.data, response.status];
+};
+
+export const refreshAuthorizationTokenApi = async ({
+  refresh_token,
+}: RefreshToken) => {
+  const response = await instanceAxios.patch("/auth/refresh", null, {
+    headers: {
+      "X-Refresh-Token": refresh_token,
+    },
+  });
+
+  return [response.data, response.status];
+};
 
 export const adminLoginApi = async ({ ...requset }: AdminLoginRequestType) => {
   const response = await instanceAxios.post("/admin/auth/signin", requset);
@@ -37,7 +68,7 @@ export const userLoginApi = async ({ ...requset }: UserLoginRequestType) => {
   return [response.data, response.status];
 };
 
-export const getCategoryList = async ({ ...requset }: AccessToken) => {
+export const getCategoryListApi = async ({ ...requset }: AccessToken) => {
   const response = await instanceAxios.get("/categories", {
     headers: authorizationHeader(requset.accessToken),
   });
@@ -45,7 +76,7 @@ export const getCategoryList = async ({ ...requset }: AccessToken) => {
   return [response.data, response.status];
 };
 
-export const getNoticeList = async ({
+export const getNoticeListApi = async ({
   accessToken,
   ...requset
 }: TokenWithType<PagenationRequestType>) => {

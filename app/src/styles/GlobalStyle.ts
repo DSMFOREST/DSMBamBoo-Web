@@ -12,6 +12,7 @@ export enum THEMA {
   fontColor2 = "#444444",
   fontColor3 = "#f7f7f7",
   fontColor4 = "#f9f9f9",
+  fontColor5 = "#d1d1d1",
   arraw = "#abb4a3",
   defaultShadow = "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
 }
@@ -66,6 +67,11 @@ const GlobalStyle: GlobalStyleComponent<{}, DefaultTheme> = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
+  }
+
+  hr {
+    margin: 0;
+    padding: 0;
   }
 
   article, aside, details, figcaption, figure,

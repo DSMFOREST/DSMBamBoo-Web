@@ -12,7 +12,7 @@ export interface AuthorizationTokens {
   refresh_token: string;
 }
 
-export type CategoryList = { id: number; name: string }[];
+export type CategoryItem = { id: number; name: string };
 
 export interface NoticeItem {
   id: number;
@@ -36,16 +36,16 @@ export interface PagenationType<T> {
       empty: boolean;
     };
     offset: number;
-    pageSize: number;
-    pageNumber: number;
+    page_size: number;
+    page_number: number;
     paged: boolean;
     unpaged: boolean;
   };
-  totalPages: number;
-  totalElements: number;
+  total_pages: number;
+  total_elements: number;
   last: boolean;
   size: number;
-  numberOfElements: number;
+  number_of_elements: number;
   first: boolean;
   sort: {
     unsorted: boolean;
@@ -67,8 +67,24 @@ export interface ApiPayload<T = null> {
   status?: number;
 }
 
+export interface DecodingToken {
+  sub: string;
+  roles: ["ROLE_ANONYMOUS" | "ROLE_ADMIN"];
+  iss: string;
+  exp: number;
+  iat: number;
+}
+
+export interface DeviceToken {
+  device_token: string;
+}
+
 export interface AccessToken {
   accessToken: string;
+}
+
+export interface RefreshToken {
+  refresh_token: string;
 }
 
 export type TokenWithType<T> = AccessToken & T;

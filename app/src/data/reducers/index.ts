@@ -1,15 +1,21 @@
 import { combineReducers } from "redux";
 
+import { setTokenToStorage, setAdminRefreshToken } from "utils/stroage";
 import modal from "./modal";
 import auth from "./auth";
+import notice from "./notice";
+import search from "./search";
 
-const appReducer = combineReducers({ modal, auth });
+const appReducer = combineReducers({ modal, auth, notice, search });
 
 const rootReducer = (state: any, action: any) => {
   let resetState = state;
 
   if (action.type === "LOG_OUT") {
     resetState = undefined;
+    setTokenToStorage("accessToken", "");
+    setTokenToStorage("refreshToken", "");
+    setAdminRefreshToken("");
   }
 
   return appReducer(resetState, action);
