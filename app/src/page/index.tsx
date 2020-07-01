@@ -2,13 +2,22 @@ import React, { FC, useEffect, useCallback, useRef } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/messaging";
 
 import GlobalStyle from "../styles/GlobalStyle";
+import { DecodingToken } from "data/middleware/api/apiTypes";
 import { Main, Header } from "components/index";
 import { LoginModal, ReportModal } from "components/modal";
 import ScrollToTop from "components/common/pageFilter/ScrollToTop";
 import { useModalRedux } from "container/modal";
+import { useAuthRedux } from "container/auth";
+import { decodingToToken } from "utils/convert";
+import {
+  setDeviceToken,
+  getTokenToStorage,
+  getAdminRefreshToken,
+} from "utils/stroage";
 
 const App: FC = () => {
   const messaging = firebase.messaging();
@@ -16,26 +25,41 @@ const App: FC = () => {
   const {
     modalStore: { isOpenLoginModal, isOpenReportModal },
   } = useModalRedux();
+  const {
+    authStore: { access_token },
+    authReducer: {
+      refreshDeviceToken,
+      refreshAuthorizationToken,
+      userLogin,
+      setAuthorizationTokens,
+      setIsAdmin,
+    },
+  } = useAuthRedux();
 
   const getDeviceToken = useCallback(async () => {
     try {
       await messaging.requestPermission();
       const token = await messaging.getToken();
 
-      console.log(token);
+      await userLogin({ device_token: token });
+      await setDeviceToken(token);
     } catch (err) {
       alert("페이지 notification알림을 허용하여주십시오.");
     }
-  }, [messaging]);
+  }, [messaging, userLogin]);
 
   const onTokenRefresh = useCallback(
     messaging.onTokenRefresh(async () => {
       try {
         const newToken = await messaging.getToken();
 
-        console.log("refreshed", newToken);
+        await refreshDeviceToken({
+          accessToken: access_token,
+          device_token: newToken,
+        });
+        await setDeviceToken(newToken);
       } catch (err) {
-        console.log("Unable to retrieve refreshed token");
+        alert("페이지 notification알림을 허용하여주십시오.");
       }
     }),
     [messaging]
@@ -59,11 +83,34 @@ const App: FC = () => {
     if (!didMountRef.current) {
       didMountRef.current = true;
 
+      setAuthorizationTokens({
+        access_token: getTokenToStorage("accessToken"),
+        refresh_token: getTokenToStorage("refreshToken"),
+      });
       getDeviceToken();
       onTokenRefresh();
       onCheckMessages();
+      if (getAdminRefreshToken()) {
+        refreshAuthorizationToken({
+          refresh_token: getAdminRefreshToken() ?? "",
+        });
+      }
     }
-  }, [didMountRef, getDeviceToken, messaging, onCheckMessages, onTokenRefresh]);
+  }, [
+    didMountRef,
+    getDeviceToken,
+    onCheckMessages,
+    onTokenRefresh,
+    refreshAuthorizationToken,
+    setAuthorizationTokens,
+  ]);
+
+  useEffect(() => {
+    setIsAdmin(
+      decodingToToken<DecodingToken>(getTokenToStorage("accessToken"))
+        ?.roles[0] === "ROLE_ADMIN"
+    );
+  }, [access_token, setIsAdmin]);
 
   return (
     <BrowserRouter>

@@ -21,3 +21,7 @@ export const isTrueString = (target: string, word: string) => {
 export const isNull = (target: any) => {
   return target === null;
 };
+
+export const isTrue = (target: any, result: any) => {
+  return target === result;
+};
