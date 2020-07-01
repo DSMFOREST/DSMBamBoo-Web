@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 
+import { NoticeItem } from "data/middleware/api/apiTypes";
 import * as S from "./style";
 
 interface OwnProps {
   isLogin: boolean;
+  data: NoticeItem[];
 }
 
-const Table: FC<OwnProps> = ({ isLogin }) => {
+const Table: FC<OwnProps> = ({ isLogin, data }) => {
   return (
     <S.TableWrapper isLogin={isLogin}>
       <table>
@@ -19,19 +21,21 @@ const Table: FC<OwnProps> = ({ isLogin }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="index">공지</td>
-            <td className="title">대나무숲 운영 지침</td>
-            <td className="createdAt">2019-04.01 23:55:00</td>
-            {isLogin && (
-              <td className="check">
-                <div>
-                  <button>수락</button>
-                  <button>거절</button>
-                </div>
-              </td>
-            )}
-          </tr>
+          {data.map((v) => (
+            <tr key={v.id}>
+              <td className="index">{`# ${v.id}번째 대나무숲`}</td>
+              <td className="title">{v.title}</td>
+              <td className="createdAt">{v.recent_approved_at}</td>
+              {isLogin && (
+                <td className="check">
+                  <div>
+                    <button>수락</button>
+                    <button>거절</button>
+                  </div>
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
     </S.TableWrapper>
