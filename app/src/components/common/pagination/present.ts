@@ -16,6 +16,7 @@ export const makePagenationArray = ({
   const array: PaginationArray = [];
   const digitsNumber = Math.floor((pageNum - 1) / 10) * 10 + 1;
   const digitsPage = Math.floor(pageLength / 10) * 10 + 1;
+  const isMultiplesOf10 = (pageLength / 10) % 1 === 0;
 
   if (digitsNumber !== 1) {
     array.push(
@@ -43,7 +44,7 @@ export const makePagenationArray = ({
     }
   }
 
-  if (digitsNumber !== digitsPage) {
+  if (digitsNumber !== digitsPage && !isMultiplesOf10) {
     array.push(
       {
         icon: ">",
