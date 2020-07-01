@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { THEMA } from "styles/GlobalStyle";
 
@@ -22,31 +22,49 @@ export const SearchWrapper = styled.div`
     background-color: #ffffff;
     margin: 10px 0;
     display: flex;
-    align-items: center;
   }
 `;
 
-export const Category = styled.div`
+export const Category = styled.div<{ isDropDown: boolean }>`
   width: 25%;
+  height: ${({ isDropDown }) => (isDropDown ? "18vh" : "100%")};
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  z-index: 10;
+  border-radius: 10px;
+  border-top-right-radius: 0;
+  box-shadow: ${({ isDropDown }) => isDropDown && THEMA.defaultShadow};
 
   > button {
+    width: 100%;
+    height: 6vh;
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 2px;
+    box-sizing: border-box;
     color: ${THEMA.fontColor1};
-    font-size: 1em;
-
-    > i {
-      width: 0;
-      height: 0;
-      margin-left: 8px;
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
-      border-top: 4px solid ${THEMA.fontColor1};
-    }
+    font-size: 0.85em;
   }
+
+  > hr {
+    width: 90%;
+    background: ${THEMA.fontColor5};
+  }
+`;
+
+export const UpDownIcon = styled.i<{ isUp: boolean }>`
+  width: 0;
+  height: 0;
+  margin-left: 8px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  ${({ isUp }) =>
+    isUp
+      ? `border-bottom: 4px solid ${THEMA.fontColor1};`
+      : `border-top: 4px solid ${THEMA.fontColor1};`}
 `;
 
 export const InputBox = styled.div`
