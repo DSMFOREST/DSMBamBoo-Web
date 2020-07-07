@@ -21,3 +21,11 @@ export function decodingToToken<T>(token: string | undefined): T {
 
   return data ? JSON.parse(b64DecodeUnicode(data)) : null;
 }
+
+export const fileSizeToMb = (size: number) => {
+  if (size < 1000000) {
+    return `${(size / 1000).toFixed(2)}KB`;
+  } else {
+    return `${(size / 1000000).toFixed(2)}MB`;
+  }
+};
