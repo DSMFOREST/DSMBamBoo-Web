@@ -9,6 +9,9 @@ import {
   AdminLoginRequestType,
   UserLoginRequestType,
   PagenationRequestType,
+  ImageUploadRequestType,
+  NoticeDetailRequestType,
+  PostNoticeRequestType,
 } from "./apiTypes";
 
 export enum API_STATUS {
@@ -18,6 +21,9 @@ export enum API_STATUS {
   getNoticeStatus = "getNoticeStatus",
   refreshDeviceTokenStatus = "refreshDeviceTokenStatus",
   refreshAuthorizationTokenStatus = "refreshAuthorizationTokenStatus",
+  imagesUploadStatus = "imagesUploadStatus",
+  getNoticeDetailStatus = "getNoticeDetailStatus",
+  postNoticeStatus = "postNoticeStatus",
 }
 
 const authorizationHeader = (accessToken: string) => ({
@@ -89,3 +95,57 @@ export const getNoticeListApi = async ({
 
   return [response.data, response.status];
 };
+
+export const postNoticeApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<PostNoticeRequestType>) => {
+  const response = await instanceAxios.post("/notices", requset, {
+    headers: authorizationHeader(accessToken),
+  });
+
+  return [response.data, response.status];
+};
+
+export const getNoticeDetailApi = async ({
+  accessToken,
+  ...request
+}: TokenWithType<NoticeDetailRequestType>) => {
+  const response = await instanceAxios.get(`/notices/${request.id}`, {
+    headers: authorizationHeader(accessToken),
+  });
+
+  return [response.data, response.status];
+};
+
+export const imageUploadApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<ImageUploadRequestType>) => {
+  const formData = new FormData();
+
+  for (let i = 0; i < requset.images.length; i++) {
+    formData.append("images", requset.images[i]);
+  }
+
+  const response = await instanceAxios.post("/images", formData, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "content-type": "multipart/form-data",
+    },
+  });
+
+  return [response.data, response.status];
+};
+
+// export const approveDraftApi = async ({ ...requset }: AdminLoginRequestType) => {
+//   const response = await instanceAxios.post("/admin/auth/signin", requset);
+
+//   return [response.data, response.status];
+// };
+
+// export const rejectDraftApi = async ({ ...requset }: AdminLoginRequestType) => {
+//   const response = await instanceAxios.delete(`/drafts/${draftId}/reject`, requset);
+
+//   return [response.data, response.status];
+// };

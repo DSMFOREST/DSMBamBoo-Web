@@ -1,5 +1,6 @@
 import {
   GET_NOTICE_LIST_ASYNC,
+  GET_NOTICE_DETAIL_ASYNC,
   RESET_STATUS,
   NoticeActions,
 } from "data/actions/notice";
@@ -9,12 +10,16 @@ import { returnApiResponseData } from "..";
 
 export type InitialState = {
   getNoticeStatus: number;
+  getNoticeDetailStatus: number;
   noticeData: PagenationType<NoticeItem[]> | null;
+  noticeDetail: NoticeItem | null;
 };
 
 const initialState: InitialState = {
   getNoticeStatus: 0,
+  getNoticeDetailStatus: 0,
   noticeData: null,
+  noticeDetail: null,
 };
 
 const noticeReducer = (
@@ -28,6 +33,13 @@ const noticeReducer = (
         statusName: API_STATUS.getNoticeStatus,
         payload: action.payload,
         dataKeyName: "noticeData",
+      });
+    case GET_NOTICE_DETAIL_ASYNC:
+      return returnApiResponseData<InitialState>({
+        state,
+        statusName: API_STATUS.getNoticeDetailStatus,
+        payload: action.payload,
+        dataKeyName: "noticeDetail",
       });
     case RESET_STATUS:
       return {

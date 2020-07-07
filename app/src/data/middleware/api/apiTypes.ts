@@ -14,6 +14,10 @@ export interface AuthorizationTokens {
 
 export type CategoryItem = { id: number; name: string };
 
+export interface NoticeDetailRequestType {
+  id: string;
+}
+
 export interface NoticeItem {
   id: number;
   title: string;
@@ -25,6 +29,24 @@ export interface NoticeItem {
   recent_created_at: string;
   approved_at: string;
   recent_approved_at: string;
+}
+
+export interface ImageUploadRequestType {
+  images: File[];
+}
+
+export interface TransformImages {
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+}
+
+export interface PostNoticeRequestType {
+  title: string;
+  content: string;
+  categories: number[];
+  images: number[];
 }
 
 export interface PagenationType<T> {
