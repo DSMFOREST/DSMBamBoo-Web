@@ -9,7 +9,7 @@ import { returnApiResponseData } from "..";
 
 export type InitialState = {
   getCategoryStatus: number;
-  categoryData: CategoryItem | null;
+  categoryData: CategoryItem[] | null;
 };
 
 const initialState: InitialState = {
