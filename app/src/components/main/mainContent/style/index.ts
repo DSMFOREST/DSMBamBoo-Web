@@ -24,6 +24,20 @@ export const TitleWrapper = styled.div`
   }
 `;
 
+export const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  box-sizing: border-box;
+
+  > img {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 export const Ellipse = styled.i`
   width: 30px;
   height: 30px;
