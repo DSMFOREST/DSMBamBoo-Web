@@ -7,7 +7,7 @@ import "firebase/messaging";
 
 import GlobalStyle from "../styles/GlobalStyle";
 import { DecodingToken } from "data/middleware/api/apiTypes";
-import { Main, Header } from "components/index";
+import { Main, Header, Footer } from "components/index";
 import { LoginModal, ReportModal } from "components/modal";
 import ScrollToTop from "components/common/pageFilter/ScrollToTop";
 import { useModalRedux } from "container/modal";
@@ -122,10 +122,15 @@ const App: FC = () => {
       <Switch>
         <ScrollToTop>
           <>
-            <Route path={["/", "/notice"]} render={() => <Main />} exact />
+            <Route
+              path={["/", "/:type", "/:type/:id"]}
+              render={() => <Main />}
+              exact
+            />
           </>
         </ScrollToTop>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 };
