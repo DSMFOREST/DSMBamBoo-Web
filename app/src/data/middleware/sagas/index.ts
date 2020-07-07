@@ -6,6 +6,7 @@ import { REFRESH_AUTHORIZATION_TOKEN_ASYNC } from "data/actions/auth";
 import authSaga from "./authSaga";
 import noticeSaga from "./noticeSaga";
 import searchSaga from "./searchSaga";
+import submitSaga from "./submitSaga";
 
 interface SagaEntityParams<ActionT, PayloadT> {
   action: {
@@ -68,5 +69,10 @@ export function* sagaEntity<ActionT, PayloadT = object>({
 }
 
 export default function* rootSaga() {
-  yield all([call(authSaga), call(noticeSaga), call(searchSaga)]);
+  yield all([
+    call(authSaga),
+    call(noticeSaga),
+    call(searchSaga),
+    call(submitSaga),
+  ]);
 }

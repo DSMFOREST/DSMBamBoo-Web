@@ -5,8 +5,9 @@ import modal from "./modal";
 import auth from "./auth";
 import notice from "./notice";
 import search from "./search";
+import submit from "./submit";
 
-const appReducer = combineReducers({ modal, auth, notice, search });
+const appReducer = combineReducers({ modal, auth, notice, search, submit });
 
 const rootReducer = (state: any, action: any) => {
   let resetState = state;
@@ -24,9 +25,12 @@ const rootReducer = (state: any, action: any) => {
 export const responseStatus = (status: number) => {
   return {
     _200: status === 200,
+    _201: status === 201,
     _400: status === 400,
+    _401: status === 401,
     _403: status === 403,
     _404: status === 404,
+    _413: status === 413,
   };
 };
 
