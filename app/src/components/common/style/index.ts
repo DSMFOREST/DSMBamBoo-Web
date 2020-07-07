@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { THEMA } from "styles/GlobalStyle";
 
@@ -113,56 +113,157 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
         width: 23%;
       }
     }
+  }
+`;
 
-    > tbody > tr {
-      transition: 0.2s;
+export const Tr = styled.tr<{ isActive: boolean; isLogin: boolean }>`
+  transition: 0.2s;
 
-      &:hover {
-        background: ${THEMA.fontColor3};
-        cursor: pointer;
-      }
+  &:hover {
+    background: ${THEMA.fontColor3};
+    cursor: pointer;
+  }
 
-      > td {
-        text-align: center;
-        font-family: "나눔고딕 Light";
-        font-size: 0.8em;
-        color: ${THEMA.fontColor2};
-        padding: 0.825rem 0;
+  > td {
+    text-align: center;
+    font-family: "나눔고딕 Light";
+    font-size: 0.8em;
+    color: ${({ isActive }) => (isActive ? THEMA.main2 : THEMA.fontColor2)};
+    padding: 0.825rem 0;
 
-        &.index {
-          width: 23%;
-          font-weight: bold;
-        }
+    &.index {
+      width: 23%;
+      font-weight: bold;
+    }
 
-        &.title {
-          width: ${({ isLogin }) => (isLogin ? "31%" : "54%")};
-          padding: 0 10px;
-          font-weight: bold;
-          text-align: left;
-        }
+    &.title {
+      width: ${({ isLogin }) => (isLogin ? "31%" : "54%")};
+      padding: 0 10px;
+      font-weight: bold;
+      text-align: left;
+    }
 
-        &.createdAt {
-          width: 23%;
-        }
+    &.createdAt {
+      width: 23%;
+    }
 
-        &.check {
-          width: 23%;
+    &.check {
+      width: 23%;
 
-          > div {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+      > div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
 
-            > button {
-              font-size: 1.1em;
-              transition: 0.2s;
+        > button {
+          font-size: 1.1em;
+          transition: 0.2s;
 
-              &:hover {
-                color: #000;
-              }
-            }
+          &:hover {
+            color: #000;
           }
         }
+      }
+    }
+  }
+`;
+
+export const DetailReportWrapper = styled.div`
+  width: 100%;
+  margin: 20px 0;
+
+  > h1 {
+    color: ${THEMA.main2};
+    font-family: "나눔고딕";
+    font-size: 1.285em;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+
+  > h2 {
+    color: #000000;
+    font-family: "나눔고딕";
+    font-size: 1.285em;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+
+  > article {
+    width: 100%;
+    padding: 10px 4px;
+    border-top: 3px solid ${THEMA.main2};
+    border-bottom: 1px solid ${THEMA.main2};
+    display: flex;
+    justify-content: space-between;
+
+    > p {
+      font-size: 0.825em;
+      color: ${THEMA.main4};
+      display: flex;
+      align-items: center;
+
+      > img {
+        width: 0.825em;
+        height: 0.825em;
+        margin: 0 2px;
+      }
+
+      > span {
+        color: ${THEMA.main5};
+      }
+    }
+  }
+
+  section {
+    width: 100%;
+    padding: 16px 12px;
+
+    > p {
+      color: ${THEMA.fontColor2};
+      line-height: 1.5;
+      font-family: "나눔고딕";
+      font-size: 0.9em;
+      white-space: pre;
+    }
+
+    div.imageWrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px 0;
+
+      > img {
+        max-width: 100%;
+        min-width: 40%;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+
+    > a {
+      font-size: 0.825em;
+      color: #000000;
+      font-family: "나눔고딕";
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+
+      > img.facebook {
+        width: 30px;
+        height: 30px;
+        margin-right: 12px;
+      }
+
+      > img.open {
+        width: 1em;
+        height: 1em;
       }
     }
   }

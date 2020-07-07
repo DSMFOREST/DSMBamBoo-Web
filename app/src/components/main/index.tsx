@@ -1,18 +1,31 @@
 import React, { FC, useEffect, useRef } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import * as S from "./style";
 import { useSearchRedux } from "container/search";
 import { useAuthRedux } from "container/auth";
 import ActionImage from "./actionImage";
+import Privacy from "../common/policy/Privacy";
 import Notice from "./mainContent/Notice";
 import MainContent from "./mainContent/MainContent";
 
+const ReturnComponent: FC<{ type: string }> = ({ type }) => {
+  switch (type) {
+    case "notice":
+      return <Notice />;
+    case "default":
+      return <MainContent />;
+    case "policy":
+      return <Privacy />;
+    default:
+      return <></>;
+  }
+};
+
 const Main: FC = () => {
   const didMountRef = useRef(false);
+  const { type } = useParams();
   const { push } = useHistory();
-  const { pathname } = useLocation();
-  const isNotice = pathname.split("?")[0] === "/notice";
   const {
     searchReducer: { getCategoryList },
   } = useSearchRedux();
@@ -24,9 +37,12 @@ const Main: FC = () => {
     if (!didMountRef.current) {
       didMountRef.current = true;
 
-      push("/?page=1");
+      if (!type) {
+        push("/default?page=1");
+      }
     }
-  }, [didMountRef, push]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [didMountRef]);
 
   useEffect(() => {
     if (access_token !== "") {
@@ -37,7 +53,9 @@ const Main: FC = () => {
   return (
     <div>
       <ActionImage />
-      <S.MainContent>{isNotice ? <Notice /> : <MainContent />}</S.MainContent>
+      <S.MainContent>
+        <ReturnComponent type={type} />
+      </S.MainContent>
     </div>
   );
 };

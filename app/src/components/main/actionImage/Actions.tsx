@@ -23,7 +23,7 @@ const Actions: FC = () => {
         <button onClick={() => pushLocation("notice")} className="left">
           공지사항
         </button>
-        <button onClick={() => pushLocation("")} className="white">
+        <button onClick={() => pushLocation("default")} className="white">
           대나무숲
         </button>
         <button onClick={handleReportModal} className="right">

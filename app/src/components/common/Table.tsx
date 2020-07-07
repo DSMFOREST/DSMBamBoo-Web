@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 
 import { NoticeItem } from "data/middleware/api/apiTypes";
 import * as S from "./style";
@@ -6,9 +7,22 @@ import * as S from "./style";
 interface OwnProps {
   isLogin: boolean;
   data: NoticeItem[];
+  noticePath?: string;
 }
 
-const Table: FC<OwnProps> = ({ isLogin, data }) => {
+const Table: FC<OwnProps> = ({ isLogin, data, noticePath }) => {
+  const { push } = useHistory();
+  const { search } = useLocation();
+  const { id } = useParams();
+  const pageNum = search.split("=")[1];
+
+  const goToDetailed = useCallback(
+    (id: number) => {
+      push(`${noticePath}/${id}?page=${pageNum}`);
+    },
+    [pageNum, noticePath, push]
+  );
+
   return (
     <S.TableWrapper isLogin={isLogin}>
       <table>
@@ -22,7 +36,12 @@ const Table: FC<OwnProps> = ({ isLogin, data }) => {
         </thead>
         <tbody>
           {data.map((v) => (
-            <tr key={v.id}>
+            <S.Tr
+              isLogin={isLogin}
+              isActive={v.id === Number(id)}
+              onClick={() => goToDetailed(v.id)}
+              key={v.id}
+            >
               <td className="index">{`# ${v.id}번째 대나무숲`}</td>
               <td className="title">{v.title}</td>
               <td className="createdAt">{v.recent_approved_at}</td>
@@ -34,7 +53,7 @@ const Table: FC<OwnProps> = ({ isLogin, data }) => {
                   </div>
                 </td>
               )}
-            </tr>
+            </S.Tr>
           ))}
         </tbody>
       </table>
