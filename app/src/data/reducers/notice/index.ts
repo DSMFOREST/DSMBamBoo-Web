@@ -45,6 +45,7 @@ const noticeReducer = (
       return {
         ...state,
         getNoticeStatus: 0,
+        getNoticeDetailStatus: 0,
       };
     default:
       return state;

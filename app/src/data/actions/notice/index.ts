@@ -16,7 +16,7 @@ export const RESET_STATUS = "RESET_STATUS" as const;
 export type getNoticeListType =
   | typeof GET_NOTICE_LIST
   | typeof GET_NOTICE_LIST_ASYNC;
-export type getNoticeListPayload = ApiPayload<PagenationType<NoticeItem>> &
+export type getNoticeListPayload = ApiPayload<PagenationType<NoticeItem[]>> &
   TokenWithType<PagenationRequestType>;
 export interface GetNoticeList {
   type: getNoticeListType;
