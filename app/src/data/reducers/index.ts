@@ -4,10 +4,22 @@ import { setTokenToStorage, setAdminRefreshToken } from "utils/stroage";
 import modal from "./modal";
 import auth from "./auth";
 import notice from "./notice";
+import article from "./article";
+import draft from "./draft";
 import search from "./search";
 import submit from "./submit";
+import community from "./community";
 
-const appReducer = combineReducers({ modal, auth, notice, search, submit });
+const appReducer = combineReducers({
+  modal,
+  auth,
+  notice,
+  article,
+  search,
+  draft,
+  submit,
+  community,
+});
 
 const rootReducer = (state: any, action: any) => {
   let resetState = state;
