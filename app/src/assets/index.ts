@@ -5,6 +5,7 @@ import accessTime from "./accessTime.png";
 import eventAvailable from "./eventAvailable.png";
 import facebook from "./facebook.png";
 import openInNew from "./openInNew.png";
+import shuffle from "./shuffle.png";
 
 export {
   BackgroundImg,
@@ -14,4 +15,5 @@ export {
   eventAvailable,
   facebook,
   openInNew,
+  shuffle,
 };
