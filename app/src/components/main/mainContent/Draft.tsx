@@ -2,32 +2,33 @@ import React, { FC, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import { LoadingImg } from "assets";
-import { useNoticeRedux } from "container/notice";
+import { useDraftRedux } from "container/draft";
 import { useAuthRedux } from "container/auth";
 import * as S from "./style";
 import Table from "components/common/Table";
 import Search from "components/common/Search";
 import Pagination from "components/common/pagination";
 import TitleWrapper from "./TitleWrapper";
-import NoticeDetail from "./NoticeDetail";
+import DraftDetail from "./DraftDetail";
 
-const Notice: FC = () => {
+const Draft: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { search } = useLocation();
   const { id } = useParams();
   const pageNum = Number(search.split("=")[1]) - 1;
   const {
-    authStore: { access_token },
+    authStore: { isAdmin, access_token },
   } = useAuthRedux();
   const {
-    noticeStore: { getNoticeStatus, noticeData },
-    noticeReducer: { getNoticeList, resetStatus },
-  } = useNoticeRedux();
+    draftStore: { getDraftStatus, draftData },
+    draftReducer: { getDraftList, resetStatus },
+  } = useDraftRedux();
 
   useEffect(() => {
     setIsLoading(true);
+
     if (access_token) {
-      getNoticeList({
+      getDraftList({
         accessToken: access_token,
         page: pageNum,
         size: 10,
@@ -35,37 +36,38 @@ const Notice: FC = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [access_token, pageNum]);
+  }, [pageNum, access_token]);
 
   useEffect(() => {
     setIsLoading(false);
     resetStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getNoticeStatus]);
+  }, [getDraftStatus]);
 
   return (
     <div>
-      {!id && <TitleWrapper title="공지사항" />}
+      {!id && <TitleWrapper title="대나무숲 이야기 (초안)" />}
       <Search />
-      {id && <NoticeDetail />}
+      {id && <DraftDetail />}
       {isLoading ? (
         <S.Loading>
           <img src={LoadingImg} alt="로딩 중..." />
         </S.Loading>
       ) : (
         <Table
-          data={noticeData?.content ?? []}
-          isLogin={false}
-          noticePath="/notice"
+          data={draftData?.content ?? []}
+          isLogin={isAdmin}
+          isDraft={true}
+          noticePath="/draft"
         />
       )}
       <Pagination
-        lastPage={noticeData?.total_pages as number}
+        lastPage={draftData?.total_pages as number}
         isPostSave={true}
-        noticePath="/notice"
+        noticePath="/draft"
       />
     </div>
   );
 };
 
-export default Notice;
+export default Draft;

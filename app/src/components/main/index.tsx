@@ -8,6 +8,7 @@ import ActionImage from "./actionImage";
 import Privacy from "../common/policy/Privacy";
 import Notice from "./mainContent/Notice";
 import MainContent from "./mainContent/MainContent";
+import Draft from "./mainContent/Draft";
 
 const ReturnComponent: FC<{ type: string }> = ({ type }) => {
   switch (type) {
@@ -17,6 +18,8 @@ const ReturnComponent: FC<{ type: string }> = ({ type }) => {
       return <MainContent />;
     case "policy":
       return <Privacy />;
+    case "draft":
+      return <Draft />;
     default:
       return <></>;
   }

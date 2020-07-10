@@ -46,6 +46,7 @@ export const Infomation = styled.div`
   margin-bottom: 30px;
 
   > p {
+    min-width: 50px;
     margin-right: 10vw;
     color: #000;
     font-size: 1em;

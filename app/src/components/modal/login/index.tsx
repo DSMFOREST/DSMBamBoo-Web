@@ -41,6 +41,15 @@ const Login: FC = () => {
     setPassword("");
   }, [adminLogin, username, password]);
 
+  const onPressEnter = useCallback(
+    ({ key }: React.KeyboardEvent<HTMLInputElement>) => {
+      if (key === "Enter") {
+        login();
+      }
+    },
+    [login]
+  );
+
   useEffect(() => {
     const { _200, _400, _403 } = responseStatus(adminLoginStatus);
 
@@ -72,6 +81,7 @@ const Login: FC = () => {
               value={username}
               onChange={handleUsername}
               placeholder="dsmbamboo123"
+              onKeyPress={onPressEnter}
               type="text"
             />
           </S.InputLabel>
@@ -81,6 +91,7 @@ const Login: FC = () => {
               value={password}
               onChange={handlePassword}
               placeholder="●●●●●●●"
+              onKeyPress={onPressEnter}
               type="password"
             />
             <span className="warning">{errMessage}</span>

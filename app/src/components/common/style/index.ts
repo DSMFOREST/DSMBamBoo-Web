@@ -83,6 +83,67 @@ export const InputBox = styled.div`
 export const TableWrapper = styled.div<{ isLogin: boolean }>`
   width: 100%;
   margin-bottom: 6vh;
+  position: relative;
+
+  > button.shuffle {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f2f2;
+    transition: 0.2s;
+
+    > div.description {
+      display: none;
+      position: relative;
+      background: #f3f2f2;
+      border-radius: 2px;
+      position: absolute;
+      right: -85px;
+
+      > p {
+        width: 70px;
+        height: 20px;
+        line-height: 20px;
+        color: #8e8e8e;
+        font-size: 12px;
+      }
+
+      &:after {
+        right: 100%;
+        top: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-right-color: #f3f2f2;
+        border-width: 6px;
+        margin-top: -6px;
+      }
+    }
+
+    > img {
+      position: relative;
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background: #e2e1e1;
+
+      > div.description {
+        display: block;
+      }
+    }
+  }
 
   > table {
     width: 100%;

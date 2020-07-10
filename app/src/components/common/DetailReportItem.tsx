@@ -6,13 +6,16 @@ import * as S from "./style";
 
 interface OwnProps {
   noticeDetail: NoticeItem | null;
+  isDraft?: boolean;
 }
 
-const DetailReportItem: FC<OwnProps> = ({ noticeDetail }) => {
+const DetailReportItem: FC<OwnProps> = ({ noticeDetail, isDraft }) => {
   return (
     <S.DetailReportWrapper>
       <h1>
-        #{noticeDetail?.id}번째_대마{" "}
+        {isDraft
+          ? `😉 ${noticeDetail?.id}번째 개시글`
+          : `# ${noticeDetail?.id}번째_대마`}
         {noticeDetail?.categories.map((v) => `#${v} `)}
       </h1>
       <h2>{noticeDetail?.title}</h2>

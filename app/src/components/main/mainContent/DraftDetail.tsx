@@ -4,35 +4,35 @@ import { useParams } from "react-router-dom";
 import * as S from "./style";
 import { LoadingImg } from "assets";
 import { useAuthRedux } from "container/auth";
-import { useNoticeRedux } from "container/notice";
+import { useDraftRedux } from "container/draft";
 import { responseStatus } from "data/reducers";
 import DetailReportItem from "components/common/DetailReportItem";
 
-const NoticeDetail: FC = () => {
+const DraftDetail: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   const {
     authStore: { access_token },
   } = useAuthRedux();
   const {
-    noticeStore: { getNoticeDetailStatus, noticeDetail },
-    noticeReducer: { getNoticeDetail, resetStatus },
-  } = useNoticeRedux();
+    draftStore: { getDraftDetailStatus, draftDetail },
+    draftReducer: { getDraftDetail, resetStatus },
+  } = useDraftRedux();
 
   useEffect(() => {
-    const { _200 } = responseStatus(getNoticeDetailStatus);
+    const { _200 } = responseStatus(getDraftDetailStatus);
 
     if (_200) {
       setIsLoading(false);
     }
 
     resetStatus();
-  }, [getNoticeDetailStatus, resetStatus]);
+  }, [getDraftDetailStatus, resetStatus]);
 
   useEffect(() => {
     setIsLoading(true);
     if (access_token) {
-      getNoticeDetail({ accessToken: access_token, id });
+      getDraftDetail({ accessToken: access_token, id });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, access_token]);
@@ -42,8 +42,8 @@ const NoticeDetail: FC = () => {
       <img src={LoadingImg} alt="로딩.." />
     </S.Loading>
   ) : (
-    <DetailReportItem noticeDetail={noticeDetail} />
+    <DetailReportItem isDraft={true} noticeDetail={draftDetail} />
   );
 };
 
-export default NoticeDetail;
+export default DraftDetail;
