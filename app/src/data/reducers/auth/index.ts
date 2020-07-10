@@ -19,6 +19,7 @@ import {
   getTokenToStorage,
   setTokenToStorage,
   setAdminRefreshToken,
+  clearStorage,
 } from "utils/stroage";
 
 export type InitialState = {
@@ -80,14 +81,21 @@ const authReducer = (
       });
     }
     case REFRESH_AUTHORIZATION_TOKEN_ASYNC: {
-      const newAccessToken = action.payload.data?.access_token;
-      const newRefreshToken = action.payload.data?.refresh_token;
-      setTokenToStorage("accessToken", newAccessToken);
-      setTokenToStorage("refreshToken", newRefreshToken);
-      if (
-        decodingToToken<DecodingToken>(newAccessToken).roles[0] === "ROLE_ADMIN"
-      ) {
-        setAdminRefreshToken(newRefreshToken ?? "");
+      if (action.payload.status === 200) {
+        const newAccessToken = action.payload.data?.access_token;
+        const newRefreshToken = action.payload.data?.refresh_token;
+
+        setTokenToStorage("accessToken", newAccessToken);
+        setTokenToStorage("refreshToken", newRefreshToken);
+
+        if (
+          decodingToToken<DecodingToken>(newAccessToken).roles[0] ===
+          "ROLE_ADMIN"
+        ) {
+          setAdminRefreshToken(newRefreshToken ?? "");
+        }
+      } else {
+        clearStorage();
       }
 
       return returnApiResponseData<InitialState>({
