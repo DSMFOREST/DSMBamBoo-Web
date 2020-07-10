@@ -27,8 +27,19 @@ export interface NoticeItem {
   images: string[];
   created_at: string;
   recent_created_at: string;
-  approved_at: string;
-  recent_approved_at: string;
+  approved_at?: string;
+  recent_approved_at?: string;
+}
+
+export interface DraftsItem {
+  id: number;
+  title: string;
+  content: string;
+  facebook_link: string;
+  categories: string[];
+  images: string[];
+  created_at: string;
+  recent_created_at: string;
 }
 
 export interface ImageUploadRequestType {
@@ -40,6 +51,10 @@ export interface TransformImages {
     id: number;
     url: string;
   }>;
+}
+
+export interface CommunityRules {
+  rules: string[];
 }
 
 export interface PostNoticeRequestType {

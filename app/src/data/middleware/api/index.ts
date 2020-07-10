@@ -19,11 +19,16 @@ export enum API_STATUS {
   userLoginStatus = "userLoginStatus",
   getCategoryStatus = "getCategoryStatus",
   getNoticeStatus = "getNoticeStatus",
+  getArticleStatus = "getArticleStatus",
   refreshDeviceTokenStatus = "refreshDeviceTokenStatus",
   refreshAuthorizationTokenStatus = "refreshAuthorizationTokenStatus",
   imagesUploadStatus = "imagesUploadStatus",
   getNoticeDetailStatus = "getNoticeDetailStatus",
+  getArticleDetailStatus = "getArticleDetailStatus",
+  getDraftStatus = "getDraftStatus",
+  getDraftDetailStatus = "getDraftDetailStatus",
   postNoticeStatus = "postNoticeStatus",
+  getCommunityRulesStatus = "getCommunityRulesStatus",
 }
 
 const authorizationHeader = (accessToken: string) => ({
@@ -96,6 +101,17 @@ export const getNoticeListApi = async ({
   return [response.data, response.status];
 };
 
+export const getNoticeDetailApi = async ({
+  accessToken,
+  ...request
+}: TokenWithType<NoticeDetailRequestType>) => {
+  const response = await instanceAxios.get(`/notices/${request.id}`, {
+    headers: authorizationHeader(accessToken),
+  });
+
+  return [response.data, response.status];
+};
+
 export const postNoticeApi = async ({
   accessToken,
   ...requset
@@ -107,11 +123,50 @@ export const postNoticeApi = async ({
   return [response.data, response.status];
 };
 
-export const getNoticeDetailApi = async ({
+export const getArticleListApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<PagenationRequestType>) => {
+  const response = await instanceAxios.get("/articles", {
+    headers: authorizationHeader(accessToken),
+    params: {
+      ...requset,
+    },
+  });
+
+  return [response.data, response.status];
+};
+
+export const getArticleDetailApi = async ({
   accessToken,
   ...request
 }: TokenWithType<NoticeDetailRequestType>) => {
-  const response = await instanceAxios.get(`/notices/${request.id}`, {
+  const response = await instanceAxios.get(`/articles/${request.id}`, {
+    headers: authorizationHeader(accessToken),
+  });
+
+  return [response.data, response.status];
+};
+
+export const getDraftListApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<PagenationRequestType>) => {
+  const response = await instanceAxios.get("/drafts", {
+    headers: authorizationHeader(accessToken),
+    params: {
+      ...requset,
+    },
+  });
+
+  return [response.data, response.status];
+};
+
+export const getDraftDetailApi = async ({
+  accessToken,
+  ...request
+}: TokenWithType<NoticeDetailRequestType>) => {
+  const response = await instanceAxios.get(`/drafts/${request.id}`, {
     headers: authorizationHeader(accessToken),
   });
 
@@ -133,6 +188,14 @@ export const imageUploadApi = async ({
       Authorization: `Bearer ${accessToken}`,
       "content-type": "multipart/form-data",
     },
+  });
+
+  return [response.data, response.status];
+};
+
+export const getCommunityRulesApi = async ({ accessToken }: AccessToken) => {
+  const response = await instanceAxios.get("/community/rules", {
+    headers: authorizationHeader(accessToken),
   });
 
   return [response.data, response.status];

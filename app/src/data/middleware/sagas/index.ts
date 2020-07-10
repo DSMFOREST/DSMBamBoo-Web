@@ -3,10 +3,14 @@ import { AxiosError } from "axios";
 
 import { refreshAuthorizationTokenApi } from "data/middleware/api";
 import { REFRESH_AUTHORIZATION_TOKEN_ASYNC } from "data/actions/auth";
+import { clearStorage } from "utils/stroage";
 import authSaga from "./authSaga";
 import noticeSaga from "./noticeSaga";
+import articleSaga from "./articleSaga";
+import draftSaga from "./draftSaga";
 import searchSaga from "./searchSaga";
 import submitSaga from "./submitSaga";
+import communitySaga from "./communitySaga";
 
 interface SagaEntityParams<ActionT, PayloadT> {
   action: {
@@ -54,10 +58,16 @@ export function* sagaEntity<ActionT, PayloadT = object>({
           },
         });
       } catch (err) {
-        yield put({
-          payload: { data: null, status: err.response?.status },
-          type,
-        });
+        if (err.response?.status === 401) {
+          clearStorage();
+          alert("유저 정보 토큰이 만료되어 새로고침됩니다.");
+          window.location.reload();
+        } else {
+          yield put({
+            payload: { data: null, status: err.response?.status },
+            type,
+          });
+        }
       }
     } else {
       yield put({
@@ -72,7 +82,10 @@ export default function* rootSaga() {
   yield all([
     call(authSaga),
     call(noticeSaga),
+    call(articleSaga),
+    call(draftSaga),
     call(searchSaga),
     call(submitSaga),
+    call(communitySaga),
   ]);
 }
