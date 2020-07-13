@@ -100,6 +100,28 @@ export const NoticeContent = styled.article`
   }
 `;
 
+export const Loading = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 40px 0;
+  justify-content: center;
+
+  > img {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+export const QuestionLoading = styled.div`
+  display: inline;
+  margin-left: 4px;
+
+  > img {
+    width: 15px;
+    height: 15px;
+  }
+`;
+
 export const TextForm = styled.p`
   font-family: "나눔고딕";
   color: ${THEMA.fontColor1};
@@ -326,9 +348,18 @@ export const SubmitButton = styled.button`
   font-family: "나눔고딕";
   font-size: 0.925em;
   color: ${THEMA.fontColor2};
+  display: flex;
+  align-items: center;
 
   > img {
     width: 18px;
     height: 18px;
+  }
+
+  &::before {
+    content: "업로드에는 빠르면 30초, 느리면 1분이 소요됩니다.";
+    margin-right: 10px;
+    font-size: 0.25em;
+    color: red;
   }
 `;

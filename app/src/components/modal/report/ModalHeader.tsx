@@ -5,9 +5,10 @@ import * as S from "./style";
 interface OwnProps {
   modalHandler: (type: "notice" | "report") => void;
   modalType: "notice" | "report";
+  isStudent: boolean;
 }
 
-const ModalHeader: FC<OwnProps> = ({ modalHandler, modalType }) => {
+const ModalHeader: FC<OwnProps> = ({ modalHandler, modalType, isStudent }) => {
   return (
     <article>
       <S.ModalButton
@@ -18,7 +19,7 @@ const ModalHeader: FC<OwnProps> = ({ modalHandler, modalType }) => {
         필수 공지
       </S.ModalButton>
       <S.ModalButton
-        onClick={() => modalHandler("report")}
+        onClick={() => isStudent && modalHandler("report")}
         isLast={true}
         isActive={modalType === "report"}
       >

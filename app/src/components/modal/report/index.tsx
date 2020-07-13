@@ -19,10 +19,17 @@ const Report: FC = () => {
     modalReducer: { handleReportModal },
   } = useModalRedux();
   const {
-    communityStore: { rules },
-    communityReducer: { getCommunityRules },
+    communityStore: {
+      rules,
+      studentQuestion,
+      getStudentQuestionStatus,
+      submitStudentAnswerStatus,
+    },
+    communityReducer: { getCommunityRules, getStudentQuestion, resetStatus },
   } = useCommunityRedux();
   const [modalType, setModalType] = useState<"notice" | "report">("notice");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
 
   const modalHandler = useCallback((type: "notice" | "report") => {
     setModalType(type);
@@ -32,9 +39,33 @@ const Report: FC = () => {
     if (!didMountRef.current) {
       didMountRef.current = true;
 
+      setIsLoading(true);
+
       getCommunityRules({ accessToken: access_token });
+      getStudentQuestion({ accessToken: access_token });
     }
-  }, [didMountRef, access_token, getCommunityRules]);
+  }, [didMountRef, access_token, getCommunityRules, getStudentQuestion]);
+
+  useEffect(() => {
+    const { _200 } = responseStatus(getStudentQuestionStatus);
+
+    if (_200) {
+      setIsLoading(false);
+    }
+
+    resetStatus();
+  }, [getStudentQuestionStatus, resetStatus]);
+
+  useEffect(() => {
+    const { _200 } = responseStatus(submitStudentAnswerStatus);
+
+    if (_200) {
+      setIsStudent(true);
+      setModalType("report");
+    }
+
+    resetStatus();
+  }, [submitStudentAnswerStatus, resetStatus]);
 
   return (
     <ModalWrapper handleModal={handleReportModal}>
@@ -44,9 +75,13 @@ const Report: FC = () => {
           <S.CloseButton onClick={handleReportModal}>✕</S.CloseButton>
         </header>
         <section>
-          <ModalHeader modalType={modalType} modalHandler={modalHandler} />
+          <ModalHeader
+            modalType={modalType}
+            modalHandler={modalHandler}
+            isStudent={isStudent}
+          />
           {modalType === "notice" ? (
-            <NoticeContent rules={rules} />
+            <NoticeContent isStudent={isStudent} isLoading={isLoading} />
           ) : (
             <ReportContent />
           )}

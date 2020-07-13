@@ -9,6 +9,11 @@ import { fileSizeToMb } from "utils/convert";
 import { ImageSave } from "assets";
 import * as S from "./style";
 
+type renderedImage = {
+  url: string;
+  name: string;
+}[];
+
 const ReportContent: FC = () => {
   const {
     authStore: { isAdmin },
@@ -22,6 +27,7 @@ const ReportContent: FC = () => {
   const [categories, setCategories] = useState<number[]>([]);
   const [imagesSize, setImagesSize] = useState("용량표기");
   const [images, setImages] = useState<File[] | null>(null);
+  const [renderedImages, setRenderedImages] = useState<renderedImage>([]);
 
   const titleHandler = useCallback(
     ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,8 +83,13 @@ const ReportContent: FC = () => {
   useEffect(() => {
     const imagesToArray = images || [];
     const imagesSize = fileSizeSum(imagesToArray);
+    const renderImgaes = images?.map((v) => ({
+      url: URL.createObjectURL(v),
+      name: v.name,
+    })) as renderedImage;
 
     setImagesSize(fileSizeToMb(imagesSize));
+    setRenderedImages(renderImgaes);
   }, [images]);
 
   return (
@@ -132,12 +143,12 @@ const ReportContent: FC = () => {
                   지원) [{imagesSize}]
                 </p>
                 <div>
-                  {images?.map((v, i) => (
+                  {renderedImages?.map((v, i) => (
                     <S.LocalImageButton
                       key={`${v.name}_${i}`}
                       onClick={() => removeFile(v.name)}
                     >
-                      <img src={URL.createObjectURL(v)} alt="이미지" />
+                      <img src={v.url} alt="이미지" />
                     </S.LocalImageButton>
                   ))}
                   <label>
