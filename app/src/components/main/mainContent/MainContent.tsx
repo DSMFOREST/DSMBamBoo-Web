@@ -47,7 +47,7 @@ const MainContent: FC = () => {
   return (
     <div>
       {!id && <TitleWrapper title="대나무숲 이야기" />}
-      <Search />
+      {/* <Search /> */}
       {id && <MainContentDetail />}
       {isLoading ? (
         <S.Loading>
@@ -62,7 +62,7 @@ const MainContent: FC = () => {
       )}
       <Pagination
         lastPage={articleData?.total_pages as number}
-        isPostSave={true}
+        isPostSave={!!articleData?.content.length}
         noticePath="/default"
       />
     </div>

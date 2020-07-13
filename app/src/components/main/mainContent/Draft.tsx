@@ -47,7 +47,7 @@ const Draft: FC = () => {
   return (
     <div>
       {!id && <TitleWrapper title="대나무숲 이야기 (초안)" />}
-      <Search />
+      {/* <Search /> */}
       {id && <DraftDetail />}
       {isLoading ? (
         <S.Loading>
@@ -63,7 +63,7 @@ const Draft: FC = () => {
       )}
       <Pagination
         lastPage={draftData?.total_pages as number}
-        isPostSave={true}
+        isPostSave={!!draftData?.content.length}
         noticePath="/draft"
       />
     </div>

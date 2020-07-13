@@ -46,7 +46,7 @@ const Notice: FC = () => {
   return (
     <div>
       {!id && <TitleWrapper title="공지사항" />}
-      <Search />
+      {/* <Search /> */}
       {id && <NoticeDetail />}
       {isLoading ? (
         <S.Loading>
@@ -61,7 +61,7 @@ const Notice: FC = () => {
       )}
       <Pagination
         lastPage={noticeData?.total_pages as number}
-        isPostSave={true}
+        isPostSave={!!noticeData?.content.length}
         noticePath="/notice"
       />
     </div>
