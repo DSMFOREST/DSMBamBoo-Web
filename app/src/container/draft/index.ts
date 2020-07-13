@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDraftListAction,
   getDraftDetailAction,
+  approveDraftAction,
+  rejectDraftAction,
   resetStatusAction,
 } from "data/actions/draft";
 import { AppState } from "data/store";
@@ -12,6 +14,7 @@ import {
   TokenWithType,
   PagenationRequestType,
   NoticeDetailRequestType,
+  DraftApprove,
 } from "data/middleware/api/apiTypes";
 
 export const useDraftRedux = () => {
@@ -21,6 +24,8 @@ export const useDraftRedux = () => {
     draftDetail: state.draft.draftDetail,
     getDraftStatus: state.draft.getDraftStatus,
     getDraftDetailStatus: state.draft.getDraftDetailStatus,
+    approveDraftStatus: state.draft.approveDraftStatus,
+    rejectDraftStatus: state.draft.rejectDraftStatus,
   }));
 
   const getDraftList = useCallback(
@@ -37,6 +42,20 @@ export const useDraftRedux = () => {
     [dispatch]
   );
 
+  const approveDraft = useCallback(
+    (payload: TokenWithType<DraftApprove>) => {
+      dispatch(approveDraftAction(payload));
+    },
+    [dispatch]
+  );
+
+  const rejectDraft = useCallback(
+    (payload: TokenWithType<DraftApprove>) => {
+      dispatch(rejectDraftAction(payload));
+    },
+    [dispatch]
+  );
+
   const resetStatus = useCallback(() => {
     dispatch(resetStatusAction());
   }, [dispatch]);
@@ -44,6 +63,8 @@ export const useDraftRedux = () => {
   const draftReducer = {
     getDraftList,
     getDraftDetail,
+    approveDraft,
+    rejectDraft,
     resetStatus,
   };
 
