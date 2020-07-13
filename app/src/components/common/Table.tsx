@@ -1,7 +1,10 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 
 import { shuffle } from "assets";
+import { responseStatus } from "data/reducers";
+import { useDraftRedux } from "container/draft";
+import { useAuthRedux } from "container/auth";
 import { NoticeItem } from "data/middleware/api/apiTypes";
 import * as S from "./style";
 
@@ -13,6 +16,14 @@ interface OwnProps {
 }
 
 const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
+  const {
+    authStore: { access_token },
+  } = useAuthRedux();
+  const {
+    draftStore: { approveDraftStatus, rejectDraftStatus },
+    draftReducer: { approveDraft, rejectDraft, getDraftList, resetStatus },
+  } = useDraftRedux();
+
   const { push } = useHistory();
   const { search } = useLocation();
   const { id, type } = useParams();
@@ -34,6 +45,48 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
     }
   }, [push, type]);
 
+  const preventDefault = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action) => {
+      e.preventDefault();
+      action();
+    },
+    []
+  );
+
+  useEffect(() => {
+    const { _204, _404 } = responseStatus(approveDraftStatus);
+
+    if (_204) {
+      getDraftList({
+        accessToken: access_token,
+        page: Number(pageNum) - 1,
+        size: 10,
+        sort: "createdAt,desc",
+      });
+    } else if (_404) {
+      alert("다른 관리자가 이미 처리하였습니다.");
+    }
+
+    resetStatus();
+  }, [access_token, approveDraftStatus, getDraftList, pageNum, resetStatus]);
+
+  useEffect(() => {
+    const { _204, _404 } = responseStatus(rejectDraftStatus);
+
+    if (_204) {
+      getDraftList({
+        accessToken: access_token,
+        page: Number(pageNum) - 1,
+        size: 10,
+        sort: "createdAt,desc",
+      });
+    } else if (_404) {
+      alert("다른 관리자가 이미 처리하였습니다.");
+    }
+
+    resetStatus();
+  }, [access_token, getDraftList, pageNum, rejectDraftStatus, resetStatus]);
+
   return (
     <S.TableWrapper isLogin={isDraftPage}>
       {isLogin && (
@@ -54,28 +107,56 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((v) => (
-            <S.Tr
-              isLogin={isDraftPage}
-              isActive={v.id === Number(id)}
-              onClick={() => goToDetailed(v.id)}
-              key={v.id}
-            >
-              <td className="index">
-                {isDraft ? `😉 ${v.id}번째 개시글` : `# ${v.id}번째_대마`}
-              </td>
-              <td className="title">{v.title}</td>
-              <td className="createdAt">{v.recent_created_at}</td>
-              {isDraftPage && (
-                <td className="check">
-                  <div>
-                    <button>수락</button>
-                    <button>거절</button>
-                  </div>
+          {data.length === 0 ? (
+            <S.EmptyTr>
+              <td colSpan={4}>데이터가 존재하지 않습니다.</td>
+            </S.EmptyTr>
+          ) : (
+            data.map((v) => (
+              <S.Tr
+                isLogin={isDraftPage}
+                isActive={v.id === Number(id)}
+                onClick={() => goToDetailed(v.id)}
+                key={v.id}
+              >
+                <td className="index">
+                  {isDraft ? `😉 ${v.id}번째 개시글` : `# ${v.id}번째_대마`}
                 </td>
-              )}
-            </S.Tr>
-          ))}
+                <td className="title">{v.title}</td>
+                <td className="createdAt">{v.recent_created_at}</td>
+                {isDraftPage && (
+                  <td className="check">
+                    <div>
+                      <button
+                        onClick={(e) =>
+                          preventDefault(e, () =>
+                            approveDraft({
+                              accessToken: access_token,
+                              draftId: v.id,
+                            })
+                          )
+                        }
+                      >
+                        수락
+                      </button>
+                      <button
+                        onClick={(e) =>
+                          preventDefault(e, () =>
+                            rejectDraft({
+                              accessToken: access_token,
+                              draftId: v.id,
+                            })
+                          )
+                        }
+                      >
+                        거절
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </S.Tr>
+            ))
+          )}
         </tbody>
       </table>
     </S.TableWrapper>

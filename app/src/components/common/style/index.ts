@@ -177,6 +177,15 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
   }
 `;
 
+export const EmptyTr = styled.tr`
+  > td {
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1em;
+  }
+`;
+
 export const Tr = styled.tr<{ isActive: boolean; isLogin: boolean }>`
   transition: 0.2s;
 
