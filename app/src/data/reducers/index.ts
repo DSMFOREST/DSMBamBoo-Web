@@ -38,6 +38,7 @@ export const responseStatus = (status: number) => {
   return {
     _200: status === 200,
     _201: status === 201,
+    _204: status === 204,
     _400: status === 400,
     _401: status === 401,
     _403: status === 403,
