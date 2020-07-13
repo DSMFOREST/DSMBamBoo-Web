@@ -12,6 +12,9 @@ import {
   ImageUploadRequestType,
   NoticeDetailRequestType,
   PostNoticeRequestType,
+  SubmitAnswer,
+  PostDrafts,
+  DraftApprove,
 } from "./apiTypes";
 
 export enum API_STATUS {
@@ -29,6 +32,11 @@ export enum API_STATUS {
   getDraftDetailStatus = "getDraftDetailStatus",
   postNoticeStatus = "postNoticeStatus",
   getCommunityRulesStatus = "getCommunityRulesStatus",
+  getStudentQuestionStatus = "getStudentQuestionStatus",
+  postDraftStatus = "postDraftStatus",
+  submitStudentAnswerStatus = "submitStudentAnswerStatus",
+  approveDraftStatus = "approveDraftStatus",
+  rejectDraftStatus = "rejectDraftStatus",
 }
 
 const authorizationHeader = (accessToken: string) => ({
@@ -201,14 +209,71 @@ export const getCommunityRulesApi = async ({ accessToken }: AccessToken) => {
   return [response.data, response.status];
 };
 
-// export const approveDraftApi = async ({ ...requset }: AdminLoginRequestType) => {
-//   const response = await instanceAxios.post("/admin/auth/signin", requset);
+export const getStudentQuestionApi = async ({ accessToken }: AccessToken) => {
+  const response = await instanceAxios.get("/students/questions", {
+    headers: authorizationHeader(accessToken),
+  });
 
-//   return [response.data, response.status];
-// };
+  return [response.data, response.status];
+};
 
-// export const rejectDraftApi = async ({ ...requset }: AdminLoginRequestType) => {
-//   const response = await instanceAxios.delete(`/drafts/${draftId}/reject`, requset);
+export const submitStudentAnswerApi = async ({
+  accessToken,
+  questionId,
+  ...request
+}: TokenWithType<SubmitAnswer>) => {
+  const response = await instanceAxios.post(
+    `/students/questions/${questionId}/answer`,
+    request,
+    {
+      headers: authorizationHeader(accessToken),
+    }
+  );
 
-//   return [response.data, response.status];
-// };
+  return [response.data, response.status];
+};
+
+export const postDraftApi = async ({
+  accessToken,
+  document_key,
+  ...request
+}: TokenWithType<PostDrafts>) => {
+  const response = await instanceAxios.post("drafts", request, {
+    headers: {
+      ...authorizationHeader(accessToken),
+      "X-Document-Key": document_key,
+    },
+  });
+
+  return [response.data, response.status];
+};
+
+export const approveDraftApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<DraftApprove>) => {
+  const response = await instanceAxios.patch(
+    `/drafts/${requset.draftId}/approve`,
+    null,
+    {
+      headers: authorizationHeader(accessToken),
+    }
+  );
+
+  return [response.data, response.status];
+};
+
+export const rejectDraftApi = async ({
+  accessToken,
+  ...requset
+}: TokenWithType<DraftApprove>) => {
+  const response = await instanceAxios.patch(
+    `/drafts/${requset.draftId}/disapprove`,
+    null,
+    {
+      headers: authorizationHeader(accessToken),
+    }
+  );
+
+  return [response.data, response.status];
+};

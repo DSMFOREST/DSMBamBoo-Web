@@ -64,6 +64,23 @@ export interface PostNoticeRequestType {
   images: number[];
 }
 
+export interface SubmitAnswer {
+  questionId: number;
+  answer: string;
+}
+
+export type PostDrafts = {
+  document_key: string;
+} & PostNoticeRequestType;
+
+export interface SubmitAnswerSuccess {
+  document_key: string;
+}
+
+export interface DraftApprove {
+  draftId: number;
+}
+
 export interface PagenationType<T> {
   content: T;
   pageable: {
@@ -102,6 +119,11 @@ export interface PagenationRequestType {
 export interface ApiPayload<T = null> {
   data?: T;
   status?: number;
+}
+
+export interface StudentQuestion {
+  id: number;
+  question: string;
 }
 
 export interface DecodingToken {

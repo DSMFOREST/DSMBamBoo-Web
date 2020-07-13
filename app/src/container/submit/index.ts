@@ -5,6 +5,7 @@ import {
   imagesUploadAction,
   resetStatusAction,
   postNoticeAction,
+  postDraftAction,
 } from "data/actions/submit";
 import { AppState } from "data/store";
 import { InitialState } from "data/reducers/submit";
@@ -12,12 +13,14 @@ import {
   TokenWithType,
   ImageUploadRequestType,
   PostNoticeRequestType,
+  PostDrafts,
 } from "data/middleware/api/apiTypes";
 
 export const useSubmitRedux = () => {
   const dispatch = useDispatch();
   const submitStore = useSelector<AppState, InitialState>((state) => ({
     exchangeImageData: state.submit.exchangeImageData,
+    postDraftStatus: state.submit.postDraftStatus,
     postNoticeStatus: state.submit.postNoticeStatus,
     imagesUploadStatus: state.submit.imagesUploadStatus,
   }));
@@ -36,6 +39,13 @@ export const useSubmitRedux = () => {
     [dispatch]
   );
 
+  const postDraft = useCallback(
+    (payload: TokenWithType<PostDrafts>) => {
+      dispatch(postDraftAction(payload));
+    },
+    [dispatch]
+  );
+
   const resetStatus = useCallback(() => {
     dispatch(resetStatusAction());
   }, [dispatch]);
@@ -43,6 +53,7 @@ export const useSubmitRedux = () => {
   const submitReducer = {
     imagesUpload,
     postNotice,
+    postDraft,
     resetStatus,
   };
 
