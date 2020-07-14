@@ -340,6 +340,10 @@ export const DetailReportWrapper = styled.div`
   }
 `;
 
+export const CategorySpan = styled.span`
+  margin-left: 10px;
+`;
+
 export const Loading = styled.div`
   width: 100%;
   display: flex;
