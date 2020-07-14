@@ -24,8 +24,8 @@ messaging.setBackgroundMessageHandler(function (payload) {
   const title = payload.data.title;
   const options = {
     body: payload.data.body,
-    icon: "./logo192.png",
-    badge: "./logo192.png",
+    icon: "logo192.png",
+    badge: "logo192.png",
   };
   return self.registration.showNotification(title, options);
 });
