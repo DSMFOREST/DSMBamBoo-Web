@@ -31,7 +31,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
 });
 
 self.addEventListener("notificationclick", function (event) {
-  const currentURL = "http://localhost:3000";
+  const currentURL = "https://www.dsmbamboo.com/";
   event.notification.close();
 
   const promiseChain = clients
