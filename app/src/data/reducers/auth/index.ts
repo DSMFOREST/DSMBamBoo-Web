@@ -50,7 +50,9 @@ const authReducer = (
       const newRefreshToken = action.payload.data?.refresh_token;
       setTokenToStorage("accessToken", newAccessToken);
       setTokenToStorage("refreshToken", newRefreshToken);
+
       if (
+        newAccessToken &&
         decodingToToken<DecodingToken>(newAccessToken).roles[0] === "ROLE_ADMIN"
       ) {
         setAdminRefreshToken(newRefreshToken ?? "");
@@ -89,8 +91,9 @@ const authReducer = (
         setTokenToStorage("refreshToken", newRefreshToken);
 
         if (
+          newAccessToken &&
           decodingToToken<DecodingToken>(newAccessToken).roles[0] ===
-          "ROLE_ADMIN"
+            "ROLE_ADMIN"
         ) {
           setAdminRefreshToken(newRefreshToken ?? "");
         }
