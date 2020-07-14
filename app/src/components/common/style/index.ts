@@ -287,6 +287,7 @@ export const DetailReportWrapper = styled.div`
   section {
     width: 100%;
     padding: 16px 12px;
+    box-sizing: border-box;
 
     > p {
       color: ${THEMA.fontColor2};
@@ -336,5 +337,16 @@ export const DetailReportWrapper = styled.div`
         height: 1em;
       }
     }
+  }
+`;
+
+export const Loading = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  > img {
+    width: 30px;
+    height: 30px;
   }
 `;
