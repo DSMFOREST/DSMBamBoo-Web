@@ -57,7 +57,10 @@ const authReducer = (
       ) {
         setAdminRefreshToken(newRefreshToken ?? "");
       }
-      const adminState = { ...state, isAdmin: true };
+      const adminState = {
+        ...state,
+        isAdmin: action.payload.status === 200 ? true : false,
+      };
       return returnApiResponseData<InitialState>({
         state: adminState,
         statusName: API_STATUS.adminLoginStatus,
