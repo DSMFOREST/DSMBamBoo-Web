@@ -66,14 +66,13 @@ const App: FC = () => {
   );
 
   const onCheckMessages = useCallback(
-    messaging.onMessage((p) => {
-      console.log(p);
+    messaging.onMessage(({ notification }) => {
       toast(
         <div>
-          {/* <p>{data.title}</p> */}
+          <p>{notification.title}</p>
           <br />
           <br />
-          {/* <p>{data.body}</p> */}
+          <p>{notification.body}</p>
         </div>
       );
     }),
