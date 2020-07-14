@@ -50,13 +50,13 @@ const draftReducer = (
     case APPROVE_DRAFT_ASYNC:
       return returnApiResponseData<InitialState>({
         state,
-        statusName: API_STATUS.getDraftDetailStatus,
+        statusName: API_STATUS.approveDraftStatus,
         payload: action.payload,
       });
     case REJECT_DRAFT_ASYNC:
       return returnApiResponseData<InitialState>({
         state,
-        statusName: API_STATUS.getDraftDetailStatus,
+        statusName: API_STATUS.rejectDraftStatus,
         payload: action.payload,
       });
     case RESET_STATUS:

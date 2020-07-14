@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useCallback, useState, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 
 import { shuffle } from "assets";
@@ -6,6 +6,7 @@ import { responseStatus } from "data/reducers";
 import { useDraftRedux } from "container/draft";
 import { useAuthRedux } from "container/auth";
 import { NoticeItem } from "data/middleware/api/apiTypes";
+import { LoadingImg } from "assets";
 import * as S from "./style";
 
 interface OwnProps {
@@ -20,10 +21,11 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
     authStore: { access_token },
   } = useAuthRedux();
   const {
-    draftStore: { approveDraftStatus, rejectDraftStatus },
+    draftStore: { approveDraftStatus, rejectDraftStatus, getDraftStatus },
     draftReducer: { approveDraft, rejectDraft, getDraftList, resetStatus },
   } = useDraftRedux();
 
+  const [isLoading, setIsLoading] = useState(false);
   const { push } = useHistory();
   const { search } = useLocation();
   const { id, type } = useParams();
@@ -47,16 +49,17 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
 
   const preventDefault = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action) => {
-      e.preventDefault();
+      e.stopPropagation();
+      setIsLoading(true);
       action();
     },
     []
   );
 
   useEffect(() => {
-    const { _204, _404 } = responseStatus(approveDraftStatus);
+    const { _200, _404 } = responseStatus(approveDraftStatus);
 
-    if (_204) {
+    if (_200) {
       getDraftList({
         accessToken: access_token,
         page: Number(pageNum) - 1,
@@ -65,15 +68,16 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
       });
     } else if (_404) {
       alert("다른 관리자가 이미 처리하였습니다.");
+      setIsLoading(false);
     }
 
     resetStatus();
   }, [access_token, approveDraftStatus, getDraftList, pageNum, resetStatus]);
 
   useEffect(() => {
-    const { _204, _404 } = responseStatus(rejectDraftStatus);
+    const { _200, _404 } = responseStatus(rejectDraftStatus);
 
-    if (_204) {
+    if (_200) {
       getDraftList({
         accessToken: access_token,
         page: Number(pageNum) - 1,
@@ -82,10 +86,21 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
       });
     } else if (_404) {
       alert("다른 관리자가 이미 처리하였습니다.");
+      setIsLoading(false);
     }
 
     resetStatus();
   }, [access_token, getDraftList, pageNum, rejectDraftStatus, resetStatus]);
+
+  useEffect(() => {
+    const { _200 } = responseStatus(getDraftStatus);
+
+    if (_200) {
+      setIsLoading(false);
+    }
+
+    resetStatus();
+  }, [getDraftStatus, resetStatus]);
 
   return (
     <S.TableWrapper isLogin={isDraftPage}>
@@ -126,32 +141,38 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
                 <td className="createdAt">{v.recent_created_at}</td>
                 {isDraftPage && (
                   <td className="check">
-                    <div>
-                      <button
-                        onClick={(e) =>
-                          preventDefault(e, () =>
-                            approveDraft({
-                              accessToken: access_token,
-                              draftId: v.id,
-                            })
-                          )
-                        }
-                      >
-                        수락
-                      </button>
-                      <button
-                        onClick={(e) =>
-                          preventDefault(e, () =>
-                            rejectDraft({
-                              accessToken: access_token,
-                              draftId: v.id,
-                            })
-                          )
-                        }
-                      >
-                        거절
-                      </button>
-                    </div>
+                    {isLoading ? (
+                      <S.Loading>
+                        <img src={LoadingImg} alt="로딩.." />
+                      </S.Loading>
+                    ) : (
+                      <div>
+                        <button
+                          onClick={(e) =>
+                            preventDefault(e, () =>
+                              approveDraft({
+                                accessToken: access_token,
+                                draftId: v.id,
+                              })
+                            )
+                          }
+                        >
+                          수락
+                        </button>
+                        <button
+                          onClick={(e) =>
+                            preventDefault(e, () =>
+                              rejectDraft({
+                                accessToken: access_token,
+                                draftId: v.id,
+                              })
+                            )
+                          }
+                        >
+                          거절
+                        </button>
+                      </div>
+                    )}
                   </td>
                 )}
               </S.Tr>

@@ -6,7 +6,7 @@ import { useDraftRedux } from "container/draft";
 import { useAuthRedux } from "container/auth";
 import * as S from "./style";
 import Table from "components/common/Table";
-import Search from "components/common/Search";
+// import Search from "components/common/Search";
 import Pagination from "components/common/pagination";
 import TitleWrapper from "./TitleWrapper";
 import DraftDetail from "./DraftDetail";

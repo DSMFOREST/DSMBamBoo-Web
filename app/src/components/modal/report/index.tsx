@@ -19,12 +19,7 @@ const Report: FC = () => {
     modalReducer: { handleReportModal },
   } = useModalRedux();
   const {
-    communityStore: {
-      rules,
-      studentQuestion,
-      getStudentQuestionStatus,
-      submitStudentAnswerStatus,
-    },
+    communityStore: { getStudentQuestionStatus, submitStudentAnswerStatus },
     communityReducer: { getCommunityRules, getStudentQuestion, resetStatus },
   } = useCommunityRedux();
   const [modalType, setModalType] = useState<"notice" | "report">("notice");
