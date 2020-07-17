@@ -14,7 +14,7 @@ const DetailReportItem: FC<OwnProps> = ({ noticeDetail, isDraft }) => {
     <S.DetailReportWrapper>
       <h1>
         {isDraft
-          ? `😉${noticeDetail?.id}번째 개시글`
+          ? `😉${noticeDetail?.id}번째 게시글`
           : `#${noticeDetail?.id}번째_대마`}
         {noticeDetail?.categories.map((v) => (
           <S.CategorySpan key={v}>#{v}</S.CategorySpan>
