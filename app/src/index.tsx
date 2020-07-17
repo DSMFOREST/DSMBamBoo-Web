@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import firebase from "firebase/app";
 
+import "./index.css";
 import { store } from "data/store";
 import * as serviceWorker from "./serviceWorker";
 import App from "page";

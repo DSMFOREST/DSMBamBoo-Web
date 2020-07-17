@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "HS봄바람체 2.0";
+  src: local("HS봄바람체 2.0"), url(./font/HS.woff) format("woff");
+}
+
+@font-face {
+  font-family: "나눔고딕";
+  src: local("나눔고딕"), url(./font/NanumGothic.woff) format("woff");
+}
