@@ -357,9 +357,9 @@ export const SubmitButton = styled.button`
   }
 
   &::before {
-    content: "업로드에는 빠르면 30초, 느리면 1분이 소요됩니다.";
+    content: "이미지 업로드 시 일정 시간이 소요될 수 있습니다.";
     margin-right: 10px;
     font-size: 0.25em;
-    color: red;
+    color: #c7c7c7;
   }
 `;
