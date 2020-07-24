@@ -3,9 +3,9 @@
   "name": "dsm-bamboo-client",
   "icons": [
     {
-      "src": "/icons/apple-touch-icon-57x57.png",
-      "sizes": "57x57",
-      "type": "image/png"
+      "src": "/icons/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
     },
     {
       "src": "/icons/apple-touch-icon-60x60.png",
@@ -58,7 +58,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://www.dsmbamboo.com",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
