@@ -89,6 +89,19 @@
     <meta name="application-name" content="&nbsp;" />
     <title>DSM - 대나무숲</title>
   </head>
+  <script>
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      if (
+        confirm(
+          "iOS 운영체제에서는 WEB-DSM-BAMBOO 이용이 어렵습니다.\n확인을 누르면 앱 스토어로 이동됩니다."
+        )
+      ) {
+        window.location.replace("https://www.apple.com/kr/ios/app-store");
+      } else {
+        window.close();
+      }
+    }
+  </script>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
