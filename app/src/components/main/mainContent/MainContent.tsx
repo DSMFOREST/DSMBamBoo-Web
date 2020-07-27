@@ -32,7 +32,7 @@ const MainContent: FC = () => {
         accessToken: access_token,
         page: pageNum,
         size: 10,
-        sort: "createdAt,desc",
+        sort: "publishedId,desc",
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
