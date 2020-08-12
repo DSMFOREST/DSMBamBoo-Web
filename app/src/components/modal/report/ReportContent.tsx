@@ -103,7 +103,7 @@ const ReportContent: FC = () => {
                 <input
                   value={title}
                   onChange={titleHandler}
-                  placeholder="제목을 입력하여주십시오."
+                  placeholder="제목을 입력하여 주십시오."
                   type="text"
                 />
               </S.TitleLabel>
