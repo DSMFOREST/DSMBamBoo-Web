@@ -26,7 +26,9 @@ const Header: FC = () => {
   return (
     <S.Wrapper>
       <div>
-        <Logo />
+        <S.HomeButton to="/default?page=1">
+          <Logo />
+        </S.HomeButton>
         <S.LoginButton
           onClick={
             decodingToToken<DecodingToken>(access_token)?.roles[0] ===

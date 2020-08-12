@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { THEMA } from "styles/GlobalStyle";
 
@@ -15,6 +16,11 @@ export const Wrapper = styled.header`
     justify-content: space-between;
     align-items: center;
   }
+`;
+
+export const HomeButton = styled(Link)`
+  all: unset;
+  cursor: pointer;
 `;
 
 export const LoginButton = styled.button`
