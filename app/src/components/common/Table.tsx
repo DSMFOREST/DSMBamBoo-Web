@@ -135,7 +135,7 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
                 key={v.id}
               >
                 <td className="index">
-                  {isDraft ? `😉 ${v.id}번째 개시글` : `# ${v.id}번째_대마`}
+                  {isDraft ? `😉 ${v.id}번째 게시글` : `# ${v.id}번째_대마`}
                 </td>
                 <td className="title">{v.title}</td>
                 <td className="createdAt">{v.recent_created_at}</td>
