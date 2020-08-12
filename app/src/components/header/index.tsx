@@ -4,7 +4,7 @@ import { useAuthRedux } from "container/auth";
 import { useModalRedux } from "container/modal";
 import Logo from "components/common/Logo";
 import { decodingToToken } from "utils/convert";
-import { getDeviceToken } from "utils/stroage";
+import { getDeviceToken, getAdminRefreshToken } from "utils/stroage";
 import { DecodingToken } from "data/middleware/api/apiTypes";
 import * as S from "./style";
 
@@ -35,10 +35,7 @@ const Header: FC = () => {
               : handleLoginModal
           }
         >
-          {decodingToToken<DecodingToken>(access_token)?.roles[0] ===
-            "ROLE_ADMIN" && access_token
-            ? "로그아웃"
-            : "관리자 로그인"}
+          {getAdminRefreshToken() ? "로그아웃" : "관리자 로그인"}
         </S.LoginButton>
       </div>
     </S.Wrapper>
