@@ -49,7 +49,7 @@ const authReducer = (
       const newAccessToken = action.payload.data?.access_token;
       const newRefreshToken = action.payload.data?.refresh_token;
       setTokenToStorage("accessToken", newAccessToken);
-      setTokenToStorage("refreshToken", newRefreshToken);
+      setAdminRefreshToken(newRefreshToken as string);
 
       if (
         newAccessToken &&
@@ -91,7 +91,7 @@ const authReducer = (
         const newRefreshToken = action.payload.data?.refresh_token;
 
         setTokenToStorage("accessToken", newAccessToken);
-        setTokenToStorage("refreshToken", newRefreshToken);
+        setAdminRefreshToken(newRefreshToken as string);
 
         if (
           newAccessToken &&

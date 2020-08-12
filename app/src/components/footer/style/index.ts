@@ -5,7 +5,6 @@ import { THEMA } from "styles/GlobalStyle";
 
 export const Wrapper = styled.footer`
   width: 100%;
-  height: 30vh;
   padding: 0 5.4% 0 7%;
   box-sizing: border-box;
 
@@ -23,6 +22,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   line-height: 1.8em;
+  margin-bottom: 30px;
 
   > h1 {
     color: ${THEMA.main2};
@@ -43,7 +43,7 @@ export const Button = styled(Link)`
 
 export const Infomation = styled.div`
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 70px;
 
   > p {
     min-width: 50px;
