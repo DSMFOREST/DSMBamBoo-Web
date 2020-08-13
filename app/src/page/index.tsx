@@ -39,6 +39,7 @@ const App: FC = () => {
       setIsAdmin,
     },
   } = useAuthRedux();
+  const accessTokenFromStroage = getTokenToStorage("accessToken");
 
   const getDeviceToken = useCallback(async () => {
     try {
@@ -115,10 +116,10 @@ const App: FC = () => {
 
   useEffect(() => {
     setIsAdmin(
-      decodingToToken<DecodingToken>(getTokenToStorage("accessToken"))
-        ?.roles[0] === "ROLE_ADMIN"
+      decodingToToken<DecodingToken>(accessTokenFromStroage)?.roles[0] ===
+        "ROLE_ADMIN"
     );
-  }, [access_token, setIsAdmin]);
+  }, [accessTokenFromStroage, setIsAdmin]);
 
   return (
     <BrowserRouter>
