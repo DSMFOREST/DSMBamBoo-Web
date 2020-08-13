@@ -13,6 +13,7 @@ import ScrollToTop from "components/common/pageFilter/ScrollToTop";
 import { useModalRedux } from "container/modal";
 import { useAuthRedux } from "container/auth";
 import { decodingToToken } from "utils/convert";
+import { getUUID } from "utils/encrypine";
 import {
   setDeviceToken,
   getTokenToStorage,
@@ -20,7 +21,10 @@ import {
 } from "utils/stroage";
 
 const App: FC = () => {
-  const messaging = firebase.messaging();
+  const messaging = firebase.messaging.isSupported()
+    ? firebase.messaging()
+    : null;
+
   const didMountRef = useRef(false);
   const {
     modalStore: { isOpenLoginModal, isOpenReportModal },
@@ -38,17 +42,23 @@ const App: FC = () => {
 
   const getDeviceToken = useCallback(async () => {
     try {
+      if (!messaging) throw new Error("IOS");
+
       await messaging.requestPermission();
       const token = await messaging.getToken();
 
       await userLogin({ device_token: token });
       await setDeviceToken(token);
     } catch (err) {
-      alert("페이지 notification알림을 허용하여주십시오.");
+      const uuid = getUUID();
+      await userLogin({ device_token: uuid });
+      await setDeviceToken(uuid);
     }
   }, [messaging, userLogin]);
 
-  const onTokenRefresh = useCallback(
+  const onTokenRefresh = useCallback(() => {
+    if (!messaging) return;
+
     messaging.onTokenRefresh(async () => {
       try {
         const newToken = await messaging.getToken();
@@ -58,14 +68,13 @@ const App: FC = () => {
           device_token: newToken,
         });
         await setDeviceToken(newToken);
-      } catch (err) {
-        alert("페이지 notification알림을 허용하여주십시오.");
-      }
-    }),
-    [messaging]
-  );
+      } catch (err) {}
+    });
+  }, [access_token, messaging, refreshDeviceToken]);
 
-  const onCheckMessages = useCallback(
+  const onCheckMessages = useCallback(() => {
+    if (!messaging) return;
+
     messaging.onMessage(({ notification }) => {
       toast(
         <div>
@@ -75,9 +84,8 @@ const App: FC = () => {
           <p>{notification.body}</p>
         </div>
       );
-    }),
-    [messaging]
-  );
+    });
+  }, [messaging]);
 
   useEffect(() => {
     if (!didMountRef.current) {
