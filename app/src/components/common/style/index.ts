@@ -294,7 +294,7 @@ export const DetailReportWrapper = styled.div`
       line-height: 1.5;
       font-family: "나눔고딕";
       font-size: 0.9em;
-      white-space: pre;
+      white-space: pre-line;
     }
 
     div.imageWrapper {
