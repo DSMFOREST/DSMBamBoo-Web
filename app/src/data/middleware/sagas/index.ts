@@ -46,12 +46,14 @@ export function* sagaEntity<ActionT, PayloadT = object>({
           payload: { data: tokenResponse[0], status: tokenResponse[1] },
         });
 
-        const response = yield call(api, action.payload);
+        const response = yield call(api, {
+          ...action.payload,
+          accessToken: tokenResponse[0].access_token,
+        });
         yield put({
           type,
           payload: {
             data: {
-              accessToken: tokenResponse[0].access_token,
               ...response[0],
             },
             status: response[1],
