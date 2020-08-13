@@ -73,6 +73,21 @@ const App: FC = () => {
     });
   }, [access_token, messaging, refreshDeviceToken]);
 
+  const sendDeviceTokenToAdmin = useCallback(
+    async (accessToken: string) => {
+      if (messaging) {
+        await messaging.requestPermission();
+        const token = await messaging.getToken();
+
+        await refreshDeviceToken({
+          accessToken,
+          device_token: token,
+        });
+      }
+    },
+    [messaging, refreshDeviceToken]
+  );
+
   const onCheckMessages = useCallback(() => {
     if (!messaging) return;
 
@@ -115,11 +130,16 @@ const App: FC = () => {
   ]);
 
   useEffect(() => {
-    setIsAdmin(
+    if (
       decodingToToken<DecodingToken>(accessTokenFromStroage)?.roles[0] ===
-        "ROLE_ADMIN"
-    );
-  }, [accessTokenFromStroage, setIsAdmin]);
+      "ROLE_ADMIN"
+    ) {
+      sendDeviceTokenToAdmin(accessTokenFromStroage);
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [accessTokenFromStroage, sendDeviceTokenToAdmin, setIsAdmin]);
 
   return (
     <BrowserRouter>
