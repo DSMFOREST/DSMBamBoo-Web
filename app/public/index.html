@@ -92,5 +92,35 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      window.isUpdateAvailable = new Promise(function (resolve, reject) {
+        if (
+          "serviceWorker" in navigator &&
+          ["localhost", "127"].indexOf(location.hostname) === -1
+        ) {
+          navigator.serviceWorker
+            .register("service-worker.js")
+            .then((reg) => {
+              reg.onupdatefound = () => {
+                const installingWorker = reg.installing;
+                installingWorker.onstatechange = () => {
+                  switch (installingWorker.state) {
+                    case "installed":
+                      if (navigator.serviceWorker.controller) {
+                        alert("새로운 버전으로 업데이트합니다.");
+                        window.location.reload();
+                        resolve(true);
+                      } else {
+                        resolve(false);
+                      }
+                      break;
+                  }
+                };
+              };
+            })
+            .catch((err) => console.error("[SW ERROR]", err));
+        }
+      });
+    </script>
   </body>
 </html>
