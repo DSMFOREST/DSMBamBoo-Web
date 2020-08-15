@@ -42,7 +42,9 @@ jobs:                                 # Job 설정
       
       - name: Workbox-config
         working-directory: ./app
-        run: workbox generateSW workbox-config.js
+        run: |
+          npm install workbox-cli
+          workbox generateSW workbox-config.js
 
       - name: Deploy # S3에 배포하기
         working-directory: ./app
