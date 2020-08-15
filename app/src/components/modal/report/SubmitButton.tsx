@@ -42,11 +42,11 @@ const SubmitButton: FC<OwnProps> = ({ title, content, categories, images }) => {
     const checker = [];
     // eslint-disable-next-line no-restricted-globals
     if (confirm("제보하시겠습니까?")) {
-      if (!title) {
+      if (!title.trim()) {
         checker.push("제목");
       }
 
-      if (!content) {
+      if (!content.trim()) {
         checker.push("내용");
       }
 
