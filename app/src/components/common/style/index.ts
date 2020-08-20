@@ -85,6 +85,31 @@ export const TableWrapper = styled.div<{ isLogin: boolean }>`
   margin-bottom: 6vh;
   position: relative;
 
+  > button.refresh {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f2f2;
+    transition: 0.2s;
+
+    > img {
+      position: relative;
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      background: #e2e1e1;
+    }
+  }
+
   > button.shuffle {
     position: absolute;
     top: 10px;

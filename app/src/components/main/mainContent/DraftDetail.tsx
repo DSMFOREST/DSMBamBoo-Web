@@ -42,7 +42,7 @@ const DraftDetail: FC = () => {
       <img src={LoadingImg} alt="로딩.." />
     </S.Loading>
   ) : (
-    <DetailReportItem isDraft={true} noticeDetail={draftDetail} />
+    <DetailReportItem itemDictionary="draft" noticeDetail={draftDetail} />
   );
 };
 

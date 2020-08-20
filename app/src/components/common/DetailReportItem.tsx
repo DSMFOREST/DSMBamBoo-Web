@@ -6,15 +6,17 @@ import * as S from "./style";
 
 interface OwnProps {
   noticeDetail: NoticeItem | null;
-  isDraft?: boolean;
+  itemDictionary: "draft" | "notice" | "main";
 }
 
-const DetailReportItem: FC<OwnProps> = ({ noticeDetail, isDraft }) => {
+const DetailReportItem: FC<OwnProps> = ({ noticeDetail, itemDictionary }) => {
   return (
     <S.DetailReportWrapper>
       <h1>
-        {isDraft
+        {itemDictionary === "draft"
           ? `😉${noticeDetail?.id}번째 게시글`
+          : itemDictionary === "notice"
+          ? `#${noticeDetail?.id}번째_대마_공지사항`
           : `#${noticeDetail?.id}번째_대마`}
         {noticeDetail?.categories.map((v) => (
           <S.CategorySpan key={v}>#{v}</S.CategorySpan>

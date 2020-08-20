@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 
-import { shuffle } from "assets";
+import { shuffle, refresh } from "assets";
 import { responseStatus } from "data/reducers";
 import { useDraftRedux } from "container/draft";
 import { useAuthRedux } from "container/auth";
@@ -11,12 +11,19 @@ import * as S from "./style";
 
 interface OwnProps {
   isLogin: boolean;
-  isDraft?: boolean;
+  itemDictionary: "draft" | "notice" | "main";
   data: NoticeItem[];
   noticePath?: string;
+  refreshData: () => void;
 }
 
-const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
+const Table: FC<OwnProps> = ({
+  isLogin,
+  refreshData,
+  itemDictionary,
+  data,
+  noticePath,
+}) => {
   const {
     authStore: { access_token },
   } = useAuthRedux();
@@ -30,7 +37,7 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
   const { search } = useLocation();
   const { id, type } = useParams();
   const pageNum = search.split("=")[1];
-  const isDraftPage = (isDraft && isLogin) || false;
+  const isDraftPage = (itemDictionary === "draft" && isLogin) || false;
 
   const goToDetailed = useCallback(
     (id: number) => {
@@ -104,6 +111,9 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
 
   return (
     <S.TableWrapper isLogin={isDraftPage}>
+      <button onClick={refreshData} className="refresh">
+        <img src={refresh} alt="새로고침" />
+      </button>
       {isLogin && (
         <button onClick={goToDraftsHandle} className="shuffle">
           <img src={shuffle} alt="초안보기" />
@@ -135,7 +145,11 @@ const Table: FC<OwnProps> = ({ isLogin, isDraft, data, noticePath }) => {
                 key={v.id}
               >
                 <td className="index">
-                  {isDraft ? `😉 ${v.id}번째 게시글` : `# ${v.id}번째_대마`}
+                  {itemDictionary === "draft"
+                    ? `😉 ${v.id}번째 게시글`
+                    : itemDictionary === "notice"
+                    ? `# ${v.id}번째_대마_공지사항`
+                    : `# ${v.id}번째_대마`}
                 </td>
                 <td className="title">{v.title}</td>
                 <td className="createdAt">{v.recent_created_at}</td>
