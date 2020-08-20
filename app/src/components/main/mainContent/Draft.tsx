@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useEffect, useCallback, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import { LoadingImg } from "assets";
@@ -6,7 +7,6 @@ import { useDraftRedux } from "container/draft";
 import { useAuthRedux } from "container/auth";
 import * as S from "./style";
 import Table from "components/common/Table";
-// import Search from "components/common/Search";
 import Pagination from "components/common/pagination";
 import TitleWrapper from "./TitleWrapper";
 import DraftDetail from "./DraftDetail";
@@ -24,7 +24,7 @@ const Draft: FC = () => {
     draftReducer: { getDraftList, resetStatus },
   } = useDraftRedux();
 
-  useEffect(() => {
+  const refreshData = useCallback(() => {
     setIsLoading(true);
 
     if (access_token) {
@@ -35,13 +35,15 @@ const Draft: FC = () => {
         sort: "createdAt,desc",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum, access_token]);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
 
   useEffect(() => {
     setIsLoading(false);
     resetStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getDraftStatus]);
 
   return (
@@ -55,9 +57,10 @@ const Draft: FC = () => {
         </S.Loading>
       ) : (
         <Table
+          refreshData={refreshData}
           data={draftData?.content ?? []}
           isLogin={isAdmin}
-          isDraft={true}
+          itemDictionary="draft"
           noticePath="/draft"
         />
       )}

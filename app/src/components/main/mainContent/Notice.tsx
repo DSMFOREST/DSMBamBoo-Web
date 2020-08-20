@@ -1,4 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { FC, useEffect, useCallback, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import { LoadingImg } from "assets";
@@ -6,7 +7,6 @@ import { useNoticeRedux } from "container/notice";
 import { useAuthRedux } from "container/auth";
 import * as S from "./style";
 import Table from "components/common/Table";
-// import Search from "components/common/Search";
 import Pagination from "components/common/pagination";
 import TitleWrapper from "./TitleWrapper";
 import NoticeDetail from "./NoticeDetail";
@@ -24,8 +24,9 @@ const Notice: FC = () => {
     noticeReducer: { getNoticeList, resetStatus },
   } = useNoticeRedux();
 
-  useEffect(() => {
+  const refreshData = useCallback(() => {
     setIsLoading(true);
+
     if (access_token) {
       getNoticeList({
         accessToken: access_token,
@@ -34,13 +35,15 @@ const Notice: FC = () => {
         sort: "createdAt,desc",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [access_token, pageNum]);
+  }, [pageNum, access_token]);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData]);
 
   useEffect(() => {
     setIsLoading(false);
     resetStatus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getNoticeStatus]);
 
   return (
@@ -54,8 +57,10 @@ const Notice: FC = () => {
         </S.Loading>
       ) : (
         <Table
+          refreshData={refreshData}
           data={noticeData?.content ?? []}
           isLogin={false}
+          itemDictionary="notice"
           noticePath="/notice"
         />
       )}

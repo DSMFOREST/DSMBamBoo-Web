@@ -42,7 +42,7 @@ const ArticleDetail: FC = () => {
       <img src={LoadingImg} alt="로딩.." />
     </S.Loading>
   ) : (
-    <DetailReportItem noticeDetail={articleDetail} />
+    <DetailReportItem itemDictionary="main" noticeDetail={articleDetail} />
   );
 };
 
